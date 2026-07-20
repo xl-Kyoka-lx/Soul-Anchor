@@ -42,10 +42,7 @@ namespace SoulAnchor.interfaz
         public void DibujarMenuPrincipal()
         {
             Clear();
-            
-            [cite_start]// Recreamos el diseño de tu GDD 
             Print(20, 5,  "S O U L   A N C H O R", Color.Red); // El título que querías más grande
-            
             Print(25, 10, "Nueva Partida", Color.White);
             Print(25, 12, "Cargar Partida", Color.White);
             Print(25, 14, "Ajustes", Color.White);
@@ -56,7 +53,7 @@ namespace SoulAnchor.interfaz
         public void DibujarPreguntaPrologo()
         {
             Clear();
-            [cite_start]Print(15, 10, "¿Quieres leer el prologo?", Color.Yellow);
+            Print(15, 10, "¿Quieres leer el prologo?", Color.Yellow);
             Print(25, 12, "1. Si", Color.White);
             Print(25, 13, "2. No", Color.White);
         }

@@ -13,13 +13,13 @@ namespace SoulAnchor.Managers
     {
         public EstadoJuego EstadoActual { get; private set; }
         
-        public Jugador? Prota { get; private set; }
+        public Jugador Prota { get; private set; }
         public List<Personaje> GrupoActivo { get; private set; }
         
         public float PosicionX { get; private set; }
         public float PosicionY { get; private set; }
-        public Ubicacion? UbicacionActual { get; private set; }
-        public Ubicacion? DestinoFijado { get; private set; }
+        public Ubicacion UbicacionActual { get; private set; }
+        public Ubicacion DestinoFijado { get; private set; }
 
         // Managers secundarios
         public QuestManager Gremio { get; private set; }
