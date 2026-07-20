@@ -1,0 +1,27 @@
+{
+  "weapons": [
+    {
+      "id": "espada_encantada",
+      "category": "melee",
+      "weapon_type": "light_magic_sword",
+      "loot_pool": "raro",
+      "base_damage": 18,
+      "atk_scaling_per_level": 1.6,
+      "abilities": [
+        {
+          "id": "sustento_magico",
+          "trigger": "passive_while_equipped",
+          "condition": {
+            "stat": "mp_percent",
+            "operator": ">=",
+            "value": 70
+          },
+          "effects": [
+            { "type": "flat_damage_bonus", "damage_type": "magic", "amount": 10 },
+            { "type": "hit_chance_bonus", "amount_pct": 10 }
+          ]
+        }
+      ]
+    }
+  ]
+}

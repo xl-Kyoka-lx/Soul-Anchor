@@ -1,0 +1,165 @@
+{
+  "weapons": [
+    {
+      "id": "daga_mellada",
+      "category": "melee",
+      "weapon_type": "dagger",
+      "drop_source": "ladron",
+      "source_type": "humano",
+      "base_damage": 8,
+      "atk_scaling_per_level": 1.5
+    },
+    {
+      "id": "mandoble_de_alquiler",
+      "category": "melee",
+      "weapon_type": "heavy_sword",
+      "drop_source": "mercenario",
+      "source_type": "humano",
+      "base_damage": 22,
+      "atk_scaling_per_level": 3.0
+    },
+    {
+      "id": "estilete_siniestro",
+      "category": "melee",
+      "weapon_type": "dagger",
+      "drop_source": "asesino",
+      "source_type": "humano",
+      "base_damage": 14,
+      "atk_scaling_per_level": 2.0
+    },
+    {
+      "id": "garrote_astillado",
+      "category": "melee",
+      "weapon_type": "light_mace",
+      "drop_source": "goblin",
+      "source_type": "monstruo",
+      "base_damage": 6,
+      "atk_scaling_per_level": 1.0
+    },
+    {
+      "id": "macana_de_roca_del_rift",
+      "category": "melee",
+      "weapon_type": "heavy_hammer",
+      "drop_source": "ogro",
+      "source_type": "monstruo",
+      "base_damage": 35,
+      "atk_scaling_per_level": 4.0
+    },
+    {
+      "id": "varita_de_chispa_viva",
+      "category": "staff",
+      "weapon_type": "wand",
+      "drop_source": "mago_de_fuego",
+      "source_type": "mago",
+      "physical_damage_fixed": 5,
+      "spell_modifier": {
+        "element": "fire",
+        "flat_damage_bonus": 15
+      },
+      "mp_cost_reduction": {
+        "element": "fire",
+        "amount": 2
+      },
+      "abilities": [
+        {
+          "id": "flama_residual",
+          "trigger": "on_fire_spell_cast",
+          "effect": "apply_status",
+          "status": "burn",
+          "chance": 0.10
+        }
+      ]
+    },
+    {
+      "id": "baculo_de_flujo_cristalino",
+      "category": "staff",
+      "weapon_type": "staff",
+      "drop_source": "mago_de_agua",
+      "source_type": "mago",
+      "physical_damage_fixed": 10,
+      "spell_modifier": {
+        "element": "heal_support",
+        "effectiveness_bonus_pct": 20
+      },
+      "mp_cost_reduction": {
+        "element": "water_heal",
+        "amount": 3
+      },
+      "abilities": [
+        {
+          "id": "purificacion_menor",
+          "trigger": "on_turn_start_while_defending_equipped",
+          "effect": "remove_negative_status",
+          "chance": 0.15
+        }
+      ]
+    },
+    {
+      "id": "cetro_de_nucleo_telurico",
+      "category": "staff",
+      "weapon_type": "scepter",
+      "drop_source": "mago_de_tierra",
+      "source_type": "mago",
+      "physical_damage_fixed": 12,
+      "spell_modifier": {
+        "element": "earth",
+        "on_cast_temp_def_bonus": 5
+      },
+      "mp_cost_reduction": {
+        "element": "earth",
+        "amount": 2
+      },
+      "abilities": [
+        {
+          "id": "enraizamiento",
+          "trigger": "on_physical_attack",
+          "effect": "apply_status",
+          "status": "paralysis",
+          "duration_turns": 1,
+          "chance": 0.10
+        }
+      ]
+    },
+    {
+      "id": "varita_de_brisa_ligera",
+      "category": "staff",
+      "weapon_type": "wand",
+      "drop_source": "mago_de_viento",
+      "source_type": "mago",
+      "physical_damage_fixed": 5,
+      "spell_modifier": {
+        "element": "wind",
+        "flat_damage_bonus": 10
+      },
+      "mp_cost_reduction": {
+        "element": "wind",
+        "amount": 3
+      },
+      "abilities": [
+        {
+          "id": "impulso",
+          "trigger": "passive_while_equipped",
+          "effect": "flee_chance_bonus",
+          "amount_pct": 15
+        }
+      ]
+    },
+    {
+      "id": "baculo_de_raiz_ancestral",
+      "category": "staff",
+      "weapon_type": "staff",
+      "drop_source": "espiritu_del_bosque",
+      "source_type": "monstruo",
+      "physical_damage_fixed": 10,
+      "spell_modifier": {
+        "element": "universal",
+        "effectiveness_bonus_pct": 10
+      },
+      "mp_cost_reduction": {
+        "element": "universal",
+        "amount": 2
+      },
+      "abilities": []
+    }
+  ]
+}

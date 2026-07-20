@@ -1,0 +1,92 @@
+{
+  "es": {
+    "cetro_de_la_horda": {
+      "name": "Cetro de la Horda",
+      "type_label": "Masa Ligera / Garrote Real",
+      "description": "Un grueso bastón de madera noble, coronado por una tosca corona de oro abollada y amarrada con tiras de cuero sucio. De su empuñadura cuelgan orejas disecadas de lobos y gemas mal talladas que tintinean con cada golpe, demostrando el estatus del tirano sobre su horda.",
+      "abilities": {
+        "llamado_de_la_chusma": "Llamado de la Chusma"
+      }
+    },
+    "filo_del_chantaje": {
+      "name": "Filo del Chantaje",
+      "type_label": "Espada Corta / Sable",
+      "description": "Un sable curvo de acero ennegrecido para evitar reflejos bajo la luz de la luna. La hoja presenta marcas de muescas reparadas a toda prisa, y su guardia de latón está decorada con el grabado desgastado de un blasón noble robado. El pomo es un pesado anillo de hierro ideal para triturar rostros a corta distancia.",
+      "abilities": {
+        "golpe_de_oportunidad": "Golpe de Oportunidad"
+      }
+    },
+    "desgarradora_anima": {
+      "name": "Desgarradora Ánima",
+      "type_label": "Espada Pesada (Excelente para Tetsu)",
+      "description": "Un mandoble colosal cubierto por una pátina de óxido rojizo que asemeja sangre seca. La hoja está fracturada en el centro, pero un aura mortecina de color gris sostiene los fragmentos flotando en su sitio. Su guarda simula dos manos huesudas entrelazadas que aprisionan la mano del portador.",
+      "abilities": {
+        "vinculo_de_agonia": "Vínculo de Agonía"
+      }
+    },
+    "baculo_del_aquelarre": {
+      "name": "Báculo del Aquelarre",
+      "type_label": "Varita / Báculo",
+      "description": "Una vara de madera de sauce completamente retorcida y carbonizada por el uso excesivo de magia oscura. En su cúspide, las raíces secas de la madera aprisionan el cráneo intacto de un cuervo, cuyos ojos brillan con un maná violáceo residual cada vez que se pronuncia un encantamiento.",
+      "abilities": {
+        "maleficio_persistente": "Maleficio Persistente"
+      }
+    },
+    "rompe_asedios": {
+      "name": "Rompe-Asedios",
+      "type_label": "Gran Martillo de Guerra",
+      "description": "Un bloque colosal de hierro fundido, liso y sin refinar, extraído directamente de las zonas bajas del Rift y atado con gruesas cadenas de anclaje a un poste de madera reforzada. La superficie está llena de abolladuras provocadas por machacar armaduras, y el mango está manchado con grasa y hollín.",
+      "abilities": {
+        "inercia_brutal": "Inercia Brutal"
+      }
+    },
+    "cervatana_del_viento_cortante": {
+      "name": "Cervatana del Viento Cortante",
+      "type_label": "Katana / Espada Delgada",
+      "description": "Una hoja de acero rúnico perfectamente pulida que refleja la luz como si fuera un espejo de agua. No tiene guardamano tradicional, solo una pieza cilíndrica de madera lacada en negro que coincide a la perfección con su funda. La hoja es tan delgada que produce un silbido agudo casi imperceptible al cortar el aire.",
+      "abilities": {
+        "corte_fluido": "Corte Fluido"
+      }
+    },
+    "incineradora_real": {
+      "name": "Incineradora Real",
+      "type_label": "Espada Larga Elemental",
+      "description": "Un espadón cuya hoja parece forjada con magma solidificado. Finas grietas recorren el metal, revelando un núcleo ardiente que emite un calor sofocante. El pomo es una brasa que nunca se apaga, y la empuñadura está envuelta en cuero escamoso de salamandra resistente al fuego.",
+      "abilities": {
+        "ceniza_viva": "Ceniza Viva"
+      }
+    },
+    "filo_de_la_marea_negra": {
+      "name": "Filo de la Marea Negra",
+      "type_label": "Cimitarra Elemental",
+      "description": "Una espada de hoja curva y ondulada que parece hecha de cristal líquido de color azul profundo. El filo es agua a alta presión que corta por fricción, y la guardia tiene la forma de una concha marina estilizada forjada en plata reluciente. Al blandirse, se escucha el sonido sutil de las olas del mar embravecido.",
+      "abilities": {
+        "reflujo_vital": "Reflujo Vital"
+      }
+    },
+    "colmillo_del_relampago": {
+      "name": "Colmillo del Relámpago",
+      "type_label": "Rapier / Estoque Elemental",
+      "description": "Una espada estocadora extremadamente delgada y zigzagueante, forjada en un metal dorado pálido que vibra constantemente de forma eléctrica. Pequeños arcos de electricidad estática de color azul saltan entre la punta de la hoja y la guardia de canasta arqueada. Despide un fuerte olor a ozono y tormenta.",
+      "abilities": {
+        "voltaje_de_choque": "Voltaje de Choque"
+      }
+    },
+    "vortice_eterno": {
+      "name": "Vórtice Eterno",
+      "type_label": "Sable Ligero Elemental",
+      "description": "Una empuñadura de mármol blanco pulido de la cual no brota una hoja de metal, sino un torbellino translúcido de viento comprimido hiperafilado que distorsiona la visión a su alrededor. Elementos de hojas secas y polvo giran atrapados en la corriente de la hoja, y la guardia está adornada con delicadas alas plateadas orientadas hacia el frente.",
+      "abilities": {
+        "corte_de_vacio": "Corte de Vacío"
+      }
+    },
+    "bastion_geologico": {
+      "name": "Bastión Geológico",
+      "type_label": "Espada Ancha Elemental",
+      "description": "Una espada masiva y rectangular tallada completamente en una sola pieza de obsidiana negra y granito rúnico pulido. No posee un filo afilado tradicional, sino que corta por el peso colosal de su impacto mineral. La empuñadura está recubierta de piedra rugosa y raíces fosilizadas que se adhieren con firmeza a los guanteletes del portador.",
+      "abilities": {
+        "coraza_de_obsidiana": "Coraza de Obsidiana"
+      }
+    }
+  }
+}

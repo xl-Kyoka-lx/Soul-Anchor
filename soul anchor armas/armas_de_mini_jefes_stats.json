@@ -1,0 +1,238 @@
+{
+  "weapons": [
+    {
+      "id": "cetro_de_la_horda",
+      "category": "melee",
+      "weapon_type": "royal_mace",
+      "drop_source": "rey_goblin",
+      "source_type": "monstruo",
+      "base_damage": 18,
+      "atk_scaling_per_level": 2.2,
+      "abilities": [
+        {
+          "id": "llamado_de_la_chusma",
+          "trigger": "on_multikill_continuation",
+          "effects": [
+            { "type": "damage_multiplier_next_attack_pct", "amount_pct": 20, "scope": "same_turn" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "filo_del_chantaje",
+      "category": "melee",
+      "weapon_type": "short_sword_sabre",
+      "drop_source": "jefe_bandido",
+      "source_type": "humano",
+      "base_damage": 24,
+      "atk_scaling_per_level": 2.8,
+      "abilities": [
+        {
+          "id": "golpe_de_oportunidad",
+          "trigger": "on_physical_attack",
+          "condition": { "target_has_negative_status": ["bleed", "poison"] },
+          "effects": [
+            { "type": "ignore_def_pct", "amount_pct": 15 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "desgarradora_anima",
+      "category": "melee",
+      "weapon_type": "heavy_sword",
+      "drop_source": "caballero_maldito",
+      "source_type": "monstruo",
+      "base_damage": 38,
+      "atk_scaling_per_level": 3.5,
+      "notes": "recomendada_para_tetsu",
+      "abilities": [
+        {
+          "id": "vinculo_de_agonia",
+          "trigger": "on_defend",
+          "effects": [
+            { "type": "store_damage_taken_pct", "amount_pct": 10 }
+          ]
+        },
+        {
+          "id": "vinculo_de_agonia_release",
+          "trigger": "on_next_physical_attack_after_store",
+          "effects": [
+            { "type": "consume_stored_as_flat_damage", "clears_storage": true }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "baculo_del_aquelarre",
+      "category": "staff",
+      "weapon_type": "staff",
+      "drop_source": "bruja_ancestral",
+      "source_type": "mago",
+      "physical_damage_fixed": 15,
+      "spell_modifier": {
+        "element": "universal",
+        "effectiveness_bonus_pct": 15
+      },
+      "mp_cost_reduction": {
+        "element": "universal",
+        "amount": 3
+      },
+      "abilities": [
+        {
+          "id": "maleficio_persistente",
+          "trigger": "on_offensive_spell_cast",
+          "effect": "apply_status",
+          "status": "confusion",
+          "duration_turns": 1,
+          "chance": 0.20
+        }
+      ]
+    },
+    {
+      "id": "rompe_asedios",
+      "category": "melee",
+      "weapon_type": "great_warhammer",
+      "drop_source": "ogro_berserker",
+      "source_type": "monstruo",
+      "base_damage": 52,
+      "atk_scaling_per_level": 4.8,
+      "abilities": [
+        {
+          "id": "inercia_brutal",
+          "trigger": "on_consecutive_hit_same_target",
+          "effects": [
+            { "type": "atk_stack_bonus", "amount_per_hit": 4, "max_stacks": 3 }
+          ],
+          "reset_on": ["target_switch", "miss"]
+        }
+      ]
+    },
+    {
+      "id": "cervatana_del_viento_cortante",
+      "category": "melee",
+      "weapon_type": "katana",
+      "drop_source": "maestro_espadachin",
+      "source_type": "humano",
+      "base_damage": 30,
+      "atk_scaling_per_level": 3.2,
+      "abilities": [
+        {
+          "id": "corte_fluido",
+          "trigger": "on_multikill_continuation",
+          "effects": [
+            { "type": "crit_chance_bonus_pct", "amount_pct": 25, "scope": "remaining_attacks_this_turn" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "incineradora_real",
+      "category": "melee",
+      "weapon_type": "elemental_longsword",
+      "drop_source": "senor_del_fuego",
+      "source_type": "monstruo",
+      "base_damage": 28,
+      "atk_scaling_per_level": 2.5,
+      "elemental_imbue": "fire",
+      "spell_modifier": {
+        "element": "fire",
+        "flat_damage_bonus": 20
+      },
+      "abilities": [
+        {
+          "id": "ceniza_viva",
+          "trigger": "on_physical_attack",
+          "effect": "apply_status",
+          "status": "burn",
+          "chance": 0.25
+        }
+      ]
+    },
+    {
+      "id": "filo_de_la_marea_negra",
+      "category": "melee",
+      "weapon_type": "elemental_scimitar",
+      "drop_source": "senor_del_agua",
+      "source_type": "monstruo",
+      "base_damage": 26,
+      "atk_scaling_per_level": 2.5,
+      "elemental_imbue": "water",
+      "spell_modifier": {
+        "element": "heal",
+        "effectiveness_bonus_pct": 15
+      },
+      "abilities": [
+        {
+          "id": "reflujo_vital",
+          "trigger": "on_physical_attack",
+          "effect": "recover_mp_pct",
+          "amount_pct": 5,
+          "chance": 0.15
+        }
+      ]
+    },
+    {
+      "id": "colmillo_del_relampago",
+      "category": "melee",
+      "weapon_type": "elemental_rapier",
+      "drop_source": "senor_del_rayo",
+      "source_type": "monstruo",
+      "base_damage": 27,
+      "atk_scaling_per_level": 2.6,
+      "elemental_imbue": "lightning",
+      "abilities": [
+        {
+          "id": "voltaje_de_choque",
+          "trigger": "on_physical_attack",
+          "effects": [
+            { "type": "apply_status", "status": "paralysis", "duration_turns": 1, "chance": 0.15 },
+            {
+              "type": "flat_damage_bonus",
+              "damage_type": "lightning",
+              "amount": 15,
+              "condition": { "target_has_status": "paralysis" }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vortice_eterno",
+      "category": "melee",
+      "weapon_type": "elemental_light_sabre",
+      "drop_source": "senor_del_viento",
+      "source_type": "monstruo",
+      "base_damage": 25,
+      "atk_scaling_per_level": 2.4,
+      "elemental_imbue": "wind",
+      "abilities": [
+        {
+          "id": "corte_de_vacio",
+          "trigger": "passive_while_equipped",
+          "effect": "ignore_back_row_distance_penalty"
+        }
+      ]
+    },
+    {
+      "id": "bastion_geologico",
+      "category": "melee",
+      "weapon_type": "elemental_broadsword",
+      "drop_source": "senor_de_la_tierra",
+      "source_type": "monstruo",
+      "base_damage": 32,
+      "atk_scaling_per_level": 3.0,
+      "elemental_imbue": "earth",
+      "abilities": [
+        {
+          "id": "coraza_de_obsidiana",
+          "trigger": "on_defend",
+          "effect": "def_bonus_on_defend",
+          "amount": 15,
+          "replaces_standard_defend_bonus": true,
+          "duration": "that_turn"
+        }
+      ]
+    }
+  ]
+}

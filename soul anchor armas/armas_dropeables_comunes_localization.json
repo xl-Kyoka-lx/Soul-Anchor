@@ -1,0 +1,67 @@
+{
+  "es": {
+    "daga_mellada": {
+      "name": "Daga Mellada",
+      "type_label": "Daga / Arma Corta",
+      "description": "Un arma ligera y desgastada por el uso delictivo. Ideal para personajes rápidos."
+    },
+    "mandoble_de_alquiler": {
+      "name": "Mandoble de Alquiler",
+      "type_label": "Espada Pesada",
+      "description": "Un espadón de hierro común, pesado pero contundente. Tetsu le saca un provecho masivo gracias a su pasiva de +5 niveles efectivos."
+    },
+    "estilete_siniestro": {
+      "name": "Estilete Siniestro",
+      "type_label": "Daga",
+      "description": "Una hoja delgada diseñada para deslizarse entre las costuras de las armaduras."
+    },
+    "garrote_astillado": {
+      "name": "Garrote Astillado",
+      "type_label": "Masa Ligera",
+      "description": "Una rama gruesa reforzada con clavos oxidados. Precaria, pero funcional en los primeros niveles del Bosque."
+    },
+    "macana_de_roca_del_rift": {
+      "name": "Macana de Roca del Rift",
+      "type_label": "Martillo / Arma Pesada",
+      "description": "Un tronco atado a una piedra minera del Rift. Su daño base es brutal, pero su peso penaliza la precisión."
+    },
+    "varita_de_chispa_viva": {
+      "name": "Varita de Chispa Viva",
+      "type_label": "Varita / Báculo",
+      "description": "",
+      "abilities": {
+        "flama_residual": "Flama Residual"
+      }
+    },
+    "baculo_de_flujo_cristalino": {
+      "name": "Báculo de Flujo Cristalino",
+      "type_label": "Varita / Báculo",
+      "description": "",
+      "abilities": {
+        "purificacion_menor": "Purificación Menor"
+      }
+    },
+    "cetro_de_nucleo_telurico": {
+      "name": "Cetro de Núcleo Telúrico",
+      "type_label": "Varita / Báculo",
+      "description": "",
+      "abilities": {
+        "enraizamiento": "Enraizamiento"
+      }
+    },
+    "varita_de_brisa_ligera": {
+      "name": "Varita de Brisa Ligera",
+      "type_label": "Varita / Báculo",
+      "description": "",
+      "abilities": {
+        "impulso": "Impulso"
+      }
+    },
+    "baculo_de_raiz_ancestral": {
+      "name": "Báculo de Raíz Ancestral",
+      "type_label": "Varita / Báculo",
+      "description": "Una rama imbuida del maná natural del Bosque Este. No se especializa en un elemento, pero es sumamente equilibrada para Ren en el juego temprano.",
+      "abilities": {}
+    }
+  }
+}

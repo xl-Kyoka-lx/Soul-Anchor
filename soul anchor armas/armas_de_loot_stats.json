@@ -1,0 +1,108 @@
+{
+  "weapons": [
+    {
+      "id": "espada_oxidada",
+      "category": "melee",
+      "weapon_type": "short_sword",
+      "loot_pool": "comun",
+      "base_damage": 4,
+      "atk_scaling_per_level": 0.8
+    },
+    {
+      "id": "espada_corta",
+      "category": "melee",
+      "weapon_type": "light_sword",
+      "loot_pool": "comun",
+      "base_damage": 10,
+      "atk_scaling_per_level": 1.2
+    },
+    {
+      "id": "espada_de_hierro",
+      "category": "melee",
+      "weapon_type": "common_longsword",
+      "loot_pool": "comun",
+      "base_damage": 16,
+      "atk_scaling_per_level": 1.8
+    },
+    {
+      "id": "espada_de_acero",
+      "category": "melee",
+      "weapon_type": "standard_longsword",
+      "loot_pool": "comun",
+      "base_damage": 22,
+      "atk_scaling_per_level": 2.2
+    },
+    {
+      "id": "espada_bastarda",
+      "category": "melee",
+      "weapon_type": "hand_and_a_half_sword",
+      "loot_pool": "comun",
+      "base_damage": 28,
+      "atk_scaling_per_level": 2.6
+    },
+    {
+      "id": "espada_larga",
+      "category": "melee",
+      "weapon_type": "advanced_combat_sword",
+      "loot_pool": "comun",
+      "base_damage": 34,
+      "atk_scaling_per_level": 3.0
+    },
+    {
+      "id": "espada_ancha",
+      "category": "melee",
+      "weapon_type": "heavy_sword",
+      "loot_pool": "comun",
+      "base_damage": 40,
+      "atk_scaling_per_level": 3.4
+    },
+    {
+      "id": "espada_de_plata",
+      "category": "melee",
+      "weapon_type": "noble_fine_sword",
+      "loot_pool": "comun",
+      "base_damage": 46,
+      "atk_scaling_per_level": 3.8
+    },
+    {
+      "id": "hacha_de_guerra",
+      "category": "melee",
+      "weapon_type": "one_handed_axe",
+      "loot_pool": "comun",
+      "base_damage": 16,
+      "atk_scaling_per_level": 2.0
+    },
+    {
+      "id": "hacha_doble",
+      "category": "melee",
+      "weapon_type": "two_handed_axe",
+      "loot_pool": "comun",
+      "base_damage": 24,
+      "atk_scaling_per_level": 2.8
+    },
+    {
+      "id": "gran_hacha",
+      "category": "melee",
+      "weapon_type": "heavy_axe",
+      "loot_pool": "comun",
+      "base_damage": 32,
+      "atk_scaling_per_level": 3.6
+    },
+    {
+      "id": "hacha_de_acero",
+      "category": "melee",
+      "weapon_type": "standard_combat_axe",
+      "loot_pool": "comun",
+      "base_damage": 40,
+      "atk_scaling_per_level": 4.2
+    },
+    {
+      "id": "hacha_de_batalla",
+      "category": "melee",
+      "weapon_type": "vanguard_axe",
+      "loot_pool": "comun",
+      "base_damage": 48,
+      "atk_scaling_per_level": 5.0
+    }
+  ]
+}

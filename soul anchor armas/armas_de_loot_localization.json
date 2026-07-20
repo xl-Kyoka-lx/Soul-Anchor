@@ -1,0 +1,69 @@
+{
+  "es": {
+    "espada_oxidada": {
+      "name": "Espada Oxidada",
+      "type_label": "Espada Corta",
+      "description": "Una hoja desportillada y comida por el moho rojizo, cuyo metal se descascara al menor impacto. La empuñadura de madera ha perdido su recubrimiento de cuero, dejando al descubierto astillas secas, mientras que la guardia de hierro baila levemente al blandirla, emitiendo un tintineo soso y precario. Es el escalón más bajo del combate."
+    },
+    "espada_corta": {
+      "name": "Espada Corta",
+      "type_label": "Espada Ligera",
+      "description": "Una hoja recta y utilitaria de apenas cincuenta centímetros de largo, forjada con acero mundano sin decoraciones. Posee una guardia en cruz simple y un pomo esférico de hierro que equilibra el peso hacia la mano del portador. El mango está envuelto en tiras roídas de cuero marrón que huelen a sudor antiguo, diseñada puramente para el combate cerrado en pasillos estrechos o cuevas."
+    },
+    "espada_de_hierro": {
+      "name": "Espada de Hierro",
+      "type_label": "Espada Larga Común",
+      "description": "Un arma robusta y pesada de doble filo, forjada en hierro macizo y opaco. La superficie de la hoja muestra las marcas rústicas de los martillazos del herrero y algunas manchas oscuras de carbón incrustado durante el templado. Su guardia es ancha y recta, ofreciendo una protección sólida para las manos, envuelta en un cordón textil grueso y áspero."
+    },
+    "espada_de_acero": {
+      "name": "Espada de Acero",
+      "type_label": "Espada Larga Estándar",
+      "description": "Una pieza de armamento militar estándar, forjada en acero refinado con un pulido grisáceo y uniforme que refleja tenuemente la luz de los menús. Una acanaladura central recorre las tres cuartas partes de la hoja para aligerar su peso sin perder rigidez estructural. La empuñadura de madera lacada se adapta cómodamente a los guantes de combate, rematada por un pomo plano en forma de disco."
+    },
+    "espada_bastarda": {
+      "name": "Espada Bastarda",
+      "type_label": "Espada de Mano y Media",
+      "description": "Una hoja esbelta pero imponente, cuyo diseño híbrido se sitúa entre la agilidad de una espada larga y la contundencia de un mandoble. El mango es notablemente extendido, permitiendo aferrarla con una o dos manos según la estrategia del turno. La guarda de acero termina en sutiles curvas apuntando hacia la hoja, y su pomo de pera proporciona un contrapeso perfecto para tajos descendentes fluidos."
+    },
+    "espada_larga": {
+      "name": "Espada Larga",
+      "type_label": "Espada de Combate Avanzada",
+      "description": "Una elegante y mortífera espada de proporciones simétricas, forjada con aleaciones de gran calidad técnica. La hoja brilla con un tono plateado pulcro y mantiene un filo liso y milimétrico capaz de rebanar cuero grueso con facilidad. La empuñadura está forrada con piel de lagarto teñida de negro, asegurando un agarre firme incluso si está empapada de fluidos o pociones durante las batallas largas."
+    },
+    "espada_ancha": {
+      "name": "Espada Ancha",
+      "type_label": "Espada Pesada",
+      "description": "Una espada de hoja masiva, plana y rectangular, notablemente más ancha que las piezas estándar del continente. Su diseño prioriza la fuerza del impacto por impacto, ideal para quebrar los huesos de criaturas acorazadas bajo la fórmula de mitigación por defensa. La guarda de hierro forjado es gruesa y envolvente, y toda la estructura despide una presencia intimidante de fuerza bruta."
+    },
+    "espada_de_plata": {
+      "name": "Espada de Plata",
+      "type_label": "Espada Fina Noble",
+      "description": "Una obra maestra de la forja, cuya hoja de acero rúnico ha sido minuciosamente imbuida y recubierta con una capa brillante de plata pura. El metal destella con un brillo blanco persistente bajo cualquier entorno CLI y emite un leve zumbido cristalino al ser desenvainada. La empuñadura cuenta con filigranas de oro rústico y un pomo incrustado con un fragmento pulido de cuarzo transparente, siendo el botín de loot más valioso y estético antes de entrar al terreno de las armas de minijefes o del Rift."
+    },
+    "hacha_de_guerra": {
+      "name": "Hacha de Guerra",
+      "type_label": "Hacha de una Mano",
+      "description": "Diseñada estrictamente para el combate en las praderas y periferias urbanas. Cuenta con una hoja de acero en forma de media luna, delgada pero muy afilada, equilibrada por un pico trasero de perforación pensado para abollar defensas blindadas. El mango de madera está reforzado con bandas laterales de metal remachadas para evitar que el astil se quiebre al bloquear ataques."
+    },
+    "hacha_doble": {
+      "name": "Hacha Doble",
+      "type_label": "Hacha de dos Manos",
+      "description": "Un arma simétrica e imponente que presenta dos hojas idénticas e hiperafiladas dispuestas a ambos lados del astil. Su peso requiere el uso de ambas manos para no perder el equilibrio en la cola de turnos. El agarre central está forrado con tiras de cuero bovino grueso, toscamente cosidas con hilo de cáñamo, ofreciendo una estética agresiva ideal para combatientes de vanguardia."
+    },
+    "gran_hacha": {
+      "name": "Gran Hacha",
+      "type_label": "Hacha Pesada",
+      "description": "Una mole de metal tosco y macizo acoplada a un poste largo de madera de roble oscuro. La hoja es ancha, rectangular y masiva, emulando la brutalidad de las armas que caen en manos de los Orcos en las cuevas. Su diseño sacrifica cualquier atisbo de finura para maximizar la fuerza del impacto bajo la curva de mitigación de daño."
+    },
+    "hacha_de_acero": {
+      "name": "Hacha de Acero",
+      "type_label": "Hacha de Combate Estándar",
+      "description": "Una pieza de armamento militar de excelente factura, templada con acero refinado de alta densidad. La superficie de la hoja tiene un acabado gris satinado que muestra un filo milimétrico, limpio y brillante. El astil es de metal ligero texturizado en la base para asegurar un agarre firme, siendo una de las opciones más sólidas y fiables del continente medio."
+    },
+    "hacha_de_batalla": {
+      "name": "Hacha de Batalla",
+      "type_label": "Hacha de Vanguardia Superior",
+      "description": "La cumbre del armamento de impacto del loot común antes de entrar en la categoría del Rift. Posee una hoja colosal con grabados geométricos sencillos en las caras laterales y un contrapezo pulido en el pomo para ejecutar giros fluidos. El mango está completamente envuelto en piel de lagarto teñida de un rojo oscuro opaco, exudando una presencia letal y veterana en la pantalla de estadísticas."
+    }
+  }
+}

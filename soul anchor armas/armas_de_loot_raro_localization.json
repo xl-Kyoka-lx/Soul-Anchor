@@ -1,0 +1,12 @@
+{
+  "es": {
+    "espada_encantada": {
+      "name": "Espada Encantada",
+      "type_label": "Espada Mágica Ligera",
+      "description": "A simple vista, posee la silueta estilizada de una espada corta militar, pero la hoja de acero templado exhibe un tono azul translúcido que parpadea rítmicamente, como si un pulso cardíaco de maná recorriera el metal. Delgadas líneas rúnicas a lo largo de la hoja, apenas perceptibles a simple vista.",
+      "abilities": {
+        "sustento_magico": "Sustento Mágico"
+      }
+    }
+  }
+}
