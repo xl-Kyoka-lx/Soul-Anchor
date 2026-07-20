@@ -38,7 +38,7 @@ namespace SoulAnchor.Managers
 
         public bool EjecutarMagia(Personaje lanzador, Enemigo objetivo, int danoMagico, int costoMp)
         {
-            if (lanzador is Companero comp && comp.EsT)
+            if (lanzador is Companero comp && comp.EsTetsu)
             {
                 danoMagico /= 2;
             }

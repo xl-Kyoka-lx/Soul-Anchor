@@ -58,7 +58,7 @@ namespace SoulAnchor.Datos.Entidades
         }
 
 
-        public Personaje ElegirObjetivo(List<Personaje> aliadosVivos)
+        public Personaje? ElegirObjetivo(List<Personaje> aliadosVivos)
         {
             if (aliadosVivos.Count == 0) return null;
 
@@ -97,5 +97,5 @@ namespace SoulAnchor.Datos.Entidades
 
             return aliadosVivos[0]; 
         }
-        }
     }
+}

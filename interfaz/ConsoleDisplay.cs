@@ -5,6 +5,8 @@ using SoulAnchor.Managers;
 
 namespace SoulAnchor.interfaz
 {
+
+
     // Heredamos de 'Console' para que esta clase sea una pantalla dibujable en SadConsole
     public class ConsoleDisplay : SadConsole.Console
     {
@@ -16,7 +18,6 @@ namespace SoulAnchor.interfaz
         {
             gameManager = gm;
             
-            [cite_start]// SadConsole permite usar el mouse, lo activamos 
             UseMouse = true; 
             UseKeyboard = true;
 

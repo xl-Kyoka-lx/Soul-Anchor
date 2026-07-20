@@ -49,7 +49,6 @@ namespace SoulAnchor.Managers
                 return false;
             }
 
-            [cite_start]
             if (lanzador is Companero comp && comp.EsMagoDeSangre)
             {
                 return lanzador.MpActual >= costoBase; 

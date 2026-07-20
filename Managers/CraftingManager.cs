@@ -5,9 +5,6 @@ namespace SoulAnchor.Managers
 {
     public static class CraftingManager
     {
-        // ==========================================
-        // RECETAS BÁSICAS [cite: 686]
-        // ==========================================
 
         public static bool CraftearPocionVida(Jugador jugador)
         {

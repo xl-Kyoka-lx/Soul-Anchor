@@ -8,10 +8,10 @@ namespace SoulAnchor.Managers
 
     public class Mision
     {
-        public string Titulo { get; set; }
+        public string? Titulo { get; set; }
         public RangoAventurero Rango { get; set; }
         public int RecompensaOro { get; set; }
-        public string Descripcion { get; set; }
+        public string? Descripcion { get; set; }
 
     }
 
@@ -19,7 +19,7 @@ namespace SoulAnchor.Managers
     {
         public RangoAventurero RangoActual { get; private set; }
         public int PuntosGremio { get; private set; }
-        public Mision MisionActiva { get; private set; }
+        public Mision? MisionActiva { get; private set; }
 
         public QuestManager()
         {

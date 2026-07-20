@@ -6,7 +6,7 @@ namespace SoulAnchor.Datos.Entidades
     {
         public string Nombre { get; private set; }
         public int Nivel { get; private set; }
-        
+        public bool EsMagoDeSangre { get; protected set; }
         public int HpMaximo { get; private set; }
         public int HpActual { get; private set; }
         public int MpMaximo { get; private set; }

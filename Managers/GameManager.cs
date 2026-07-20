@@ -13,17 +13,17 @@ namespace SoulAnchor.Managers
     {
         public EstadoJuego EstadoActual { get; private set; }
         
-        public Jugador Prota { get; private set; }
+        public Jugador? Prota { get; private set; }
         public List<Personaje> GrupoActivo { get; private set; }
         
         public float PosicionX { get; private set; }
         public float PosicionY { get; private set; }
-        public Ubicacion UbicacionActual { get; private set; }
-        public Ubicacion DestinoFijado { get; private set; }
+        public Ubicacion? UbicacionActual { get; private set; }
+        public Ubicacion? DestinoFijado { get; private set; }
 
         // Managers secundarios
         public QuestManager Gremio { get; private set; }
-        public CombatSystem CombateActual { get; private set; }
+        public CombatSystem? CombateActual { get; private set; }
 
         public GameManager()
         {
@@ -32,9 +32,7 @@ namespace SoulAnchor.Managers
             GrupoActivo = new List<Personaje>();
         }
 
-        // ==========================================
         // 1. INICIO Y CARGA DE PARTIDA
-        // ==========================================
         
         public void IniciarNuevaPartida(string nombreProta)
         {
@@ -58,11 +56,9 @@ namespace SoulAnchor.Managers
 
         public void CargarPartida()
         {
-            DatosGuardado datos = SaveManager.CargarPartida();
+            DatosGuardado? datos = SaveManager.CargarPartida();
             if (datos != null)
             {
-                // Aquí reconstruirías a los personajes usando los datos
-                // y actualizarías PosicionX y PosicionY.
                 EstadoActual = EstadoJuego.Explorando;
             }
         }
