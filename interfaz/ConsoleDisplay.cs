@@ -14,6 +14,7 @@ namespace SoulAnchor.interfaz
         SeleccionIdioma,
         MenuPrincipal,
         PreguntaPrologo,
+        Prologo,
         Juego
     }
 
@@ -74,7 +75,7 @@ namespace SoulAnchor.interfaz
 
             Surface.Print(20, 5, LocalizationManager.Obtener(idioma, "titulo_juego"), Color.Red);
 
-            AgregarOpcion(25, 10, LocalizationManager.Obtener(idioma, "menu nueva partida"), IrAPreguntaPrologo);
+            AgregarOpcion(25, 10, LocalizationManager.Obtener(idioma, "menu_nueva_partida"), IrAPreguntaPrologo);
             AgregarOpcion(25, 12, LocalizationManager.Obtener(idioma, "menu_cargar_partida"), CargarPartidaDesdeMenu);
             AgregarOpcion(25, 14, LocalizationManager.Obtener(idioma, "menu_ajustes"), () => { /* TODO: pantalla de ajustes */ });
             AgregarOpcion(25, 16, LocalizationManager.Obtener(idioma, "menu_salir"), () => Environment.Exit(0));
@@ -89,6 +90,50 @@ namespace SoulAnchor.interfaz
 
             AgregarOpcion(25, 12, LocalizationManager.Obtener(idioma, "prologo_si"), () => IniciarPartida(leerPrologo: true));
             AgregarOpcion(25, 13, LocalizationManager.Obtener(idioma, "prologo_no"), () => IniciarPartida(leerPrologo: false));
+        }
+
+        public void DibujarPrologo()
+        {
+            Surface.Clear();
+            opcionesActuales.Clear();
+
+            string texto = gameManager.Historia.PaginaActualTexto;
+
+            // Imprimimos el texto de la página envuelto a 60 columnas para que no se corte
+            int y = 4;
+            foreach (string linea in EnvolverTexto(texto, 60))
+            {
+                Surface.Print(5, y, linea, Color.White);
+                y++;
+            }
+
+            string indicador = idioma == "en" ? "(click or press Enter to continue)" : "(click o presiona Enter para continuar)";
+            Surface.Print(5, 22, indicador, Color.Gray);
+        }
+
+        // Divide un texto largo en líneas de máximo 'ancho' caracteres, respetando palabras completas
+        private static List<string> EnvolverTexto(string texto, int ancho)
+        {
+            var lineas = new List<string>();
+            var palabras = texto.Split(' ');
+            var lineaActual = "";
+
+            foreach (var palabra in palabras)
+            {
+                string candidata = lineaActual.Length == 0 ? palabra : lineaActual + " " + palabra;
+                if (candidata.Length > ancho)
+                {
+                    lineas.Add(lineaActual);
+                    lineaActual = palabra;
+                }
+                else
+                {
+                    lineaActual = candidata;
+                }
+            }
+
+            if (lineaActual.Length > 0) lineas.Add(lineaActual);
+            return lineas;
         }
 
         public void DibujarPantallaJuegoIniciado()
@@ -138,11 +183,34 @@ namespace SoulAnchor.interfaz
 
         private void IniciarPartida(bool leerPrologo)
         {
-            // TODO: si leerPrologo es true, mostrar aquí el texto del prólogo antes de arrancar
             gameManager.IniciarNuevaPartida("Ren");
 
-            pantallaActual = PantallaUI.Juego;
-            DibujarPantallaJuegoIniciado();
+            if (leerPrologo)
+            {
+                gameManager.Historia.IniciarPrologo(idioma);
+                pantallaActual = PantallaUI.Prologo;
+                DibujarPrologo();
+            }
+            else
+            {
+                pantallaActual = PantallaUI.Juego;
+                DibujarPantallaJuegoIniciado();
+            }
+        }
+
+        private void AvanzarPrologo()
+        {
+            gameManager.Historia.AvanzarPagina();
+
+            if (gameManager.Historia.PrologoTerminado)
+            {
+                pantallaActual = PantallaUI.Juego;
+                DibujarPantallaJuegoIniciado();
+            }
+            else
+            {
+                DibujarPrologo();
+            }
         }
 
         // ==========================================
@@ -152,6 +220,15 @@ namespace SoulAnchor.interfaz
         public override bool ProcessMouse(MouseScreenObjectState state)
         {
             base.ProcessMouse(state);
+
+            if (pantallaActual == PantallaUI.Prologo)
+            {
+                if (state.IsOnScreenObject && state.Mouse.LeftClicked)
+                {
+                    AvanzarPrologo();
+                }
+                return true;
+            }
 
             if (!state.IsOnScreenObject)
             {
@@ -252,6 +329,14 @@ namespace SoulAnchor.interfaz
                     else if (GameHost.Instance.Keyboard.IsKeyPressed(Keys.D2))
                     {
                         IniciarPartida(leerPrologo: false);
+                    }
+                    break;
+
+                case PantallaUI.Prologo:
+                    if (GameHost.Instance.Keyboard.IsKeyPressed(Keys.Enter) ||
+                        GameHost.Instance.Keyboard.IsKeyPressed(Keys.Space))
+                    {
+                        AvanzarPrologo();
                     }
                     break;
 

@@ -28,12 +28,14 @@ namespace SoulAnchor.Managers
 
         // Managers secundarios
         public QuestManager Gremio { get; private set; }
+        public StoryManager Historia { get; private set; }
         public CombatSystem? CombateActual { get; private set; }
 
         public GameManager()
         {
             EstadoActual = EstadoJuego.MenuPrincipal;
             Gremio = new QuestManager();
+            Historia = new StoryManager();
             GrupoActivo = new List<Personaje>();
         }
 

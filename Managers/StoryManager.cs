@@ -7,7 +7,7 @@ namespace SoulAnchor.Managers
 {
     public class StoryManager
     {
-        private static readonly string rutaPrologo = Path.Combine(AppContext.BaseDirectory, "Data", "Historia", "prologo_localization.json");
+        private static readonly string rutaPrologo = Path.Combine(AppContext.BaseDirectory, "Data", "Jsons", "Localization", "Historia", "Prologo_localizacion.json");
 
         private Dictionary<string, List<string>>? paginasPrologoPorIdioma;
         private List<string>? paginasPrologoActivas;
@@ -16,7 +16,7 @@ namespace SoulAnchor.Managers
         public bool PrologoTerminado => paginasPrologoActivas == null || paginaActual >= paginasPrologoActivas.Count;
 
         public string PaginaActualTexto => paginasPrologoActivas != null && paginaActual < paginasPrologoActivas.Count
-            ? paginasPrologoActivas[paginaActual]
+            ? TextoEncoding.ACP437(paginasPrologoActivas[paginaActual])
             : string.Empty;
 
         public int PaginaActualIndice => paginaActual;

@@ -9,7 +9,7 @@ namespace SoulAnchor.Managers
     {
         // Usamos AppContext.BaseDirectory (carpeta del .exe/bin) en vez de una ruta relativa,
         // porque el "directorio actual" con dotnet run es la carpeta del proyecto, no el bin de salida.
-        private static readonly string rutaArchivo = Path.Combine(AppContext.BaseDirectory, "Data", "Localization", "ui_strings.json");
+        private static readonly string rutaArchivo = Path.Combine(AppContext.BaseDirectory, "Data", "Jsons", "Localization", "ui_strings.json");
 
         private static Dictionary<string, Dictionary<string, string>>? textos;
         private static bool cargado = false;
@@ -47,7 +47,7 @@ namespace SoulAnchor.Managers
                 textos.TryGetValue(idiomaKey, out var diccionarioIdioma) &&
                 diccionarioIdioma.TryGetValue(clave, out var valor))
             {
-                return valor;
+                return TextoEncoding.ACP437(valor);
             }
 
             // Fallback: si falta la clave o el idioma, devolvemos la clave misma para notar el error visualmente
@@ -56,6 +56,8 @@ namespace SoulAnchor.Managers
 
         public static string ObtenerFormateado(string idioma, string clave, params object[] args)
         {
+            // Obtener() ya devuelve la plantilla convertida a CP437, así que el string.Format
+            // final también queda listo para imprimir directamente
             string plantilla = Obtener(idioma, clave);
             return string.Format(plantilla, args);
         }
