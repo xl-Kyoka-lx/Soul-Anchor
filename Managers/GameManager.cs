@@ -12,14 +12,19 @@ namespace SoulAnchor.Managers
     public class GameManager
     {
         public EstadoJuego EstadoActual { get; private set; }
-        
-        public Jugador Prota { get; private set; }
+
+        // Prota puede ser null hasta que se llame a IniciarNuevaPartida() o CargarPartida()
+        public Jugador? Prota { get; private set; }
         public List<Personaje> GrupoActivo { get; private set; }
-        
+
         public float PosicionX { get; private set; }
         public float PosicionY { get; private set; }
-        public Ubicacion UbicacionActual { get; private set; }
-        public Ubicacion DestinoFijado { get; private set; }
+
+        // Puede ser null mientras el jugador está viajando (fuera de una ciudad)
+        public Ubicacion? UbicacionActual { get; private set; }
+
+        // Puede ser null si no hay un destino fijado
+        public Ubicacion? DestinoFijado { get; private set; }
 
         // Managers secundarios
         public QuestManager Gremio { get; private set; }
@@ -33,7 +38,7 @@ namespace SoulAnchor.Managers
         }
 
         // 1. INICIO Y CARGA DE PARTIDA
-        
+
         public void IniciarNuevaPartida(string nombreProta)
         {
             // Creamos al equipo desde la Database
@@ -66,7 +71,7 @@ namespace SoulAnchor.Managers
         // ==========================================
         // 2. SISTEMA DE EXPLORACIÓN Y VIAJE
         // ==========================================
-        
+
         public void FijarDestino(Ubicacion nuevoDestino)
         {
             DestinoFijado = nuevoDestino;
@@ -76,7 +81,7 @@ namespace SoulAnchor.Managers
 
         public void AvanzarHaciaDestino()
         {
-            if (DestinoFijado == null) return;
+            if (DestinoFijado == null || Prota == null) return;
 
             float[] nuevaPos = Ubicacion.AvanzarHaciaDestino(PosicionX, PosicionY, DestinoFijado);
             PosicionX = nuevaPos[0];
@@ -96,6 +101,8 @@ namespace SoulAnchor.Managers
 
         private void LanzarRNGEncuentro()
         {
+            if (Prota == null) return;
+
             Random rng = new Random();
             int tirada = rng.Next(1, 11);
 
@@ -112,13 +119,15 @@ namespace SoulAnchor.Managers
         // ==========================================
         // 3. TRANSICIÓN A COMBATE
         // ==========================================
-        
+
         private void GenerarCombateSalvaje()
         {
+            if (Prota == null) return;
+
             // Creamos un grupo de enemigos basado en el nivel del jugador
             List<Enemigo> enemigosSalvajes = new List<Enemigo>();
-            enemigosSalvajes.Add(Database.CrearLobo(Prota.Nivel)); 
-            
+            enemigosSalvajes.Add(Database.CrearLobo(Prota.Nivel));
+
             // Podrías añadir lógica aquí para que a veces salgan 2 o 3 enemigos
 
             CombateActual = new CombatSystem(GrupoActivo, enemigosSalvajes);
@@ -136,13 +145,12 @@ namespace SoulAnchor.Managers
                 }
                 else
                 {
-                    if (Prota.EstaVivo()) 
+                    if (Prota != null && Prota.EstaVivo())
                     {
                         EstadoActual = EstadoJuego.Explorando;
                     }
                     else
                     {
-
                         EjecutarPenalizacionMuerte();
                     }
                 }
@@ -151,9 +159,11 @@ namespace SoulAnchor.Managers
 
         private void EjecutarPenalizacionMuerte()
         {
-            Prota.Curar(1); 
+            if (Prota == null) return;
+
+            Prota.Curar(1);
             Prota.GastarOro(50);
-            CargarPartida(); 
+            CargarPartida();
         }
     }
 }
