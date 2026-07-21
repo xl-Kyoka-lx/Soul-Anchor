@@ -1,0 +1,32 @@
+{
+  "es": {
+    "titulo_juego": "S O U L   A N C H O R",
+    "idioma_pregunta": "Selecciona tu idioma / Select your language:",
+    "idioma_opcion_es": "1. ES (Español)",
+    "idioma_opcion_en": "2. EN (English)",
+    "menu_nueva_partida": "Nueva Partida",
+    "menu_cargar_partida": "Cargar Partida",
+    "menu_ajustes": "Ajustes",
+    "menu_salir": "Salir",
+    "prologo_pregunta": "¿Quieres leer el prólogo?",
+    "prologo_si": "1. Si",
+    "prologo_no": "2. No",
+    "juego_iniciado_titulo": "=== JUEGO INICIADO ===",
+    "juego_iniciado_bienvenida": "Bienvenido {0}. Estás en {1}."
+  },
+  "en": {
+    "titulo_juego": "S O U L   A N C H O R",
+    "idioma_pregunta": "Selecciona tu idioma / Select your language:",
+    "idioma_opcion_es": "1. ES (Español)",
+    "idioma_opcion_en": "2. EN (English)",
+    "menu_nueva_partida": "New Game",
+    "menu_cargar_partida": "Load Game",
+    "menu_ajustes": "Settings",
+    "menu_salir": "Exit",
+    "prologo_pregunta": "Do you want to read the prologue?",
+    "prologo_si": "1. Yes",
+    "prologo_no": "2. No",
+    "juego_iniciado_titulo": "=== GAME STARTED ===",
+    "juego_iniciado_bienvenida": "Welcome {0}. You are in {1}."
+  }
+}

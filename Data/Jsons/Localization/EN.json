@@ -1,0 +1,11 @@
+{
+"en": {
+    "new_game": "New Game",
+    "load_game": "Load Game",
+    "settings": "Settings",
+    "exit": "Exit",
+    "prologue_prompt": "Do you want to read the prologue?",
+    "yes": "1. Yes",
+    "no": "2. No"
+  }
+}

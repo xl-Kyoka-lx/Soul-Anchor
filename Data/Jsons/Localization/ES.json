@@ -1,0 +1,11 @@
+{
+ "es": {
+    "new_game": "Nueva Partida",
+    "load_game": "Cargar Partida",
+    "settings": "Ajustes",
+    "exit": "Salir",
+    "prologue_prompt": "¿Quieres leer el prólogo?",
+    "yes": "1. Sí",
+    "no": "2. No"
+    }
+}

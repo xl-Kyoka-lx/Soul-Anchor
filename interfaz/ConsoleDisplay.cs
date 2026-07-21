@@ -1,26 +1,54 @@
 using System;
+using System.Collections.Generic;
 using SadConsole;
+using SadConsole.Input;
 using SadRogue.Primitives; // Librería de colores y posiciones en SadConsole
 using SoulAnchor.Managers;
 
 namespace SoulAnchor.interfaz
 {
+    // Estados propios de la pantalla de UI (onboarding), separados del EstadoJuego del GameManager,
+    // porque esto es flujo de presentación, no estado real del mundo del juego.
+    public enum PantallaUI
+    {
+        SeleccionIdioma,
+        MenuPrincipal,
+        PreguntaPrologo,
+        Juego
+    }
 
+    // Representa una opción de menú clickeable/seleccionable en la pantalla actual.
+    public class OpcionMenu
+    {
+        public string Texto = "";
+        public int X;
+        public int Y;
+        public Action? Accion;
+    }
 
     // Heredamos de 'Console' para que esta clase sea una pantalla dibujable en SadConsole
     public class ConsoleDisplay : SadConsole.Console
     {
         private GameManager gameManager;
-        private bool idiomaSeleccionado = false;
-        private string idioma = "ES";
+        private PantallaUI pantallaActual;
+        private string idioma = "es"; // "es" o "en", coincide con las claves del JSON
+
+        // Opciones clickeables/seleccionables de la pantalla que se está mostrando ahora mismo
+        private List<OpcionMenu> opcionesActuales = new List<OpcionMenu>();
+
+        // Recordamos qué opción tiene el mouse encima para el efecto hover (GDD 15.4)
+        private OpcionMenu? opcionConHover = null;
 
         public ConsoleDisplay(int width, int height, GameManager gm) : base(width, height)
         {
             gameManager = gm;
-            
-            UseMouse = true; 
+
+            UseMouse = true;
             UseKeyboard = true;
 
+            LocalizationManager.Cargar();
+
+            pantallaActual = PantallaUI.SeleccionIdioma;
             DibujarPantallaFirstBoot();
         }
 
@@ -30,83 +58,206 @@ namespace SoulAnchor.interfaz
 
         public void DibujarPantallaFirstBoot()
         {
-            Surface.Clear(); // Limpiamos la pantalla
+            Surface.Clear();
+            opcionesActuales.Clear();
 
-            // Imprimimos el texto en las coordenadas X, Y de la pantalla de la consola
-            Surface.Print(20, 10, "Selecciona tu idioma / Select your language:", Color.White);
-            Surface.Print(32, 12, "1. ES (Espanol)", Color.Cyan);
-            Surface.Print(32, 13, "2. EN (English)", Color.Cyan);
+            Surface.Print(20, 10, LocalizationManager.Obtener(idioma, "idioma_pregunta"), Color.White);
+
+            AgregarOpcion(25, 12, LocalizationManager.Obtener(idioma, "idioma_opcion_es"), () => SeleccionarIdioma("es"));
+            AgregarOpcion(25, 13, LocalizationManager.Obtener(idioma, "idioma_opcion_en"), () => SeleccionarIdioma("en"));
         }
 
-        public void DibujarMenuPrincipalES()
+        public void DibujarMenuPrincipal()
         {
             Surface.Clear();
-            Surface.Print(29, 5,  "S O U L   A N C H O R", Color.Red);
-            Surface.Print(32, 10, "Nueva Partida", Color.White);
-            Surface.Print(32, 12, "Cargar Partida", Color.White);
-            Surface.Print(35, 14, "Ajustes", Color.White);
-            Surface.Print(36, 16, "Salir", Color.White);
+            opcionesActuales.Clear();
+
+            Surface.Print(20, 5, LocalizationManager.Obtener(idioma, "titulo_juego"), Color.Red);
+
+            AgregarOpcion(25, 10, LocalizationManager.Obtener(idioma, "menu nueva partida"), IrAPreguntaPrologo);
+            AgregarOpcion(25, 12, LocalizationManager.Obtener(idioma, "menu_cargar_partida"), CargarPartidaDesdeMenu);
+            AgregarOpcion(25, 14, LocalizationManager.Obtener(idioma, "menu_ajustes"), () => { /* TODO: pantalla de ajustes */ });
+            AgregarOpcion(25, 16, LocalizationManager.Obtener(idioma, "menu_salir"), () => Environment.Exit(0));
         }
-        public void DibujarMenuPrincipalEN()
-        {
-            Surface.Clear();
-            Surface.Print(29, 5,  "S O U L   A N C H O R", Color.Red);
-            Surface.Print(35, 10, "New Game", Color.White);
-            Surface.Print(35 , 12, "Load Game", Color.White);
-            Surface.Print(35, 14, "Settings", Color.White);
-            Surface.Print(37, 16, "Exit", Color.White);
-        }
+
         public void DibujarPreguntaPrologo()
         {
             Surface.Clear();
-            Surface.Print(15, 10, "¿Quieres leer el prologo?", Color.Yellow);
-            Surface.Print(15, 12, "1. Si", Color.White);
-            Surface.Print(15, 13, "2. No", Color.White);
+            opcionesActuales.Clear();
+
+            Surface.Print(15, 10, LocalizationManager.Obtener(idioma, "prologo_pregunta"), Color.Yellow);
+
+            AgregarOpcion(25, 12, LocalizationManager.Obtener(idioma, "prologo_si"), () => IniciarPartida(leerPrologo: true));
+            AgregarOpcion(25, 13, LocalizationManager.Obtener(idioma, "prologo_no"), () => IniciarPartida(leerPrologo: false));
+        }
+
+        public void DibujarPantallaJuegoIniciado()
+        {
+            Surface.Clear();
+            opcionesActuales.Clear();
+
+            Surface.Print(2, 2, LocalizationManager.Obtener(idioma, "juego_iniciado_titulo"), Color.Green);
+            Surface.Print(2, 4, LocalizationManager.ObtenerFormateado(
+                idioma,
+                "juego_iniciado_bienvenida",
+                gameManager.Prota!.Nombre,
+                gameManager.UbicacionActual!.Nombre));
+        }
+
+        // Helper para registrar una opción de menú: la imprime y la deja lista para detectar click/hover
+        private void AgregarOpcion(int x, int y, string texto, Action accion)
+        {
+            Surface.Print(x, y, texto, Color.White);
+            opcionesActuales.Add(new OpcionMenu { Texto = texto, X = x, Y = y, Accion = accion });
         }
 
         // ==========================================
-        // LÓGICA DE INPUT (El bucle del juego)
+        // TRANSICIONES DE ESTADO
         // ==========================================
 
-        // Update se ejecuta constantemente (como en Unity)
+        private void SeleccionarIdioma(string idiomaElegido)
+        {
+            idioma = idiomaElegido;
+            pantallaActual = PantallaUI.MenuPrincipal;
+            DibujarMenuPrincipal();
+        }
+
+        private void IrAPreguntaPrologo()
+        {
+            pantallaActual = PantallaUI.PreguntaPrologo;
+            DibujarPreguntaPrologo();
+        }
+
+        private void CargarPartidaDesdeMenu()
+        {
+            gameManager.CargarPartida();
+            pantallaActual = PantallaUI.Juego;
+            // Aquí luego dibujaremos la pantalla de exploración/ciudad real en vez de este placeholder
+            DibujarPantallaJuegoIniciado();
+        }
+
+        private void IniciarPartida(bool leerPrologo)
+        {
+            // TODO: si leerPrologo es true, mostrar aquí el texto del prólogo antes de arrancar
+            gameManager.IniciarNuevaPartida("Ren");
+
+            pantallaActual = PantallaUI.Juego;
+            DibujarPantallaJuegoIniciado();
+        }
+
+        // ==========================================
+        // LÓGICA DE MOUSE
+        // ==========================================
+
+        public override bool ProcessMouse(MouseScreenObjectState state)
+        {
+            base.ProcessMouse(state);
+
+            if (!state.IsOnScreenObject)
+            {
+                if (opcionConHover != null)
+                {
+                    // El mouse salió de toda opción; quitamos el hover visual
+                    RedibujarPantallaActual();
+                    opcionConHover = null;
+                }
+                return false;
+            }
+
+            Point celda = state.CellPosition;
+            OpcionMenu? opcionBajoElMouse = null;
+
+            foreach (var opcion in opcionesActuales)
+            {
+                if (celda.Y == opcion.Y && celda.X >= opcion.X && celda.X < opcion.X + opcion.Texto.Length)
+                {
+                    opcionBajoElMouse = opcion;
+                    break;
+                }
+            }
+
+            // Efecto hover (GDD 15.4): oscurece el texto de la opción bajo el cursor
+            if (opcionBajoElMouse != opcionConHover)
+            {
+                RedibujarPantallaActual();
+
+                if (opcionBajoElMouse != null)
+                {
+                    Surface.Print(opcionBajoElMouse.X, opcionBajoElMouse.Y, opcionBajoElMouse.Texto, Color.Gray);
+                }
+
+                opcionConHover = opcionBajoElMouse;
+            }
+
+            if (opcionBajoElMouse != null && state.Mouse.LeftClicked)
+            {
+                opcionBajoElMouse.Accion?.Invoke();
+            }
+
+            return true;
+        }
+
+        private void RedibujarPantallaActual()
+        {
+            switch (pantallaActual)
+            {
+                case PantallaUI.SeleccionIdioma:
+                    DibujarPantallaFirstBoot();
+                    break;
+                case PantallaUI.MenuPrincipal:
+                    DibujarMenuPrincipal();
+                    break;
+                case PantallaUI.PreguntaPrologo:
+                    DibujarPreguntaPrologo();
+                    break;
+                case PantallaUI.Juego:
+                    // La pantalla de juego se maneja aparte una vez esté implementada la exploración
+                    break;
+            }
+        }
+
+        // ==========================================
+        // LÓGICA DE TECLADO (input híbrido, GDD 15.1)
+        // ==========================================
+
         public override void Update(TimeSpan delta)
         {
             base.Update(delta);
 
-            // Lógica temporal de teclado para probar rápido antes de meter el Mouse
-            if (!idiomaSeleccionado)
+            switch (pantallaActual)
             {
-                if (GameHost.Instance.Keyboard.IsKeyPressed(SadConsole.Input.Keys.D1))
-                {
-                    idioma = "ES";
-                    idiomaSeleccionado = true;
-                    DibujarMenuPrincipalES();
-                }
-                else if (GameHost.Instance.Keyboard.IsKeyPressed(SadConsole.Input.Keys.D2))
-                {
-                    idioma = "EN";
-                    idiomaSeleccionado = true;
-                    DibujarMenuPrincipalEN();
-                }
-            }
-            else if (gameManager.EstadoActual == EstadoJuego.MenuPrincipal)
-            {
-                // Aquí simulamos que el jugador hizo clic en "Nueva Partida" pulsando la tecla N
-                // Más adelante lo cambiaremos a eventos de Mouse.LeftClicked
-                if (GameHost.Instance.Keyboard.IsKeyPressed(SadConsole.Input.Keys.N))
-                {
-                    DibujarPreguntaPrologo();
-                }
-                // Si pulsa '2' simulamos que dijo No al prólogo
-                else if (GameHost.Instance.Keyboard.IsKeyPressed(SadConsole.Input.Keys.D2))
-                {
-                    // Arrancamos el juego a través del GameManager
-                    gameManager.IniciarNuevaPartida("Ren");
+                case PantallaUI.SeleccionIdioma:
+                    if (GameHost.Instance.Keyboard.IsKeyPressed(Keys.D1))
+                    {
+                        SeleccionarIdioma("es");
+                    }
+                    else if (GameHost.Instance.Keyboard.IsKeyPressed(Keys.D2))
+                    {
+                        SeleccionarIdioma("en");
+                    }
+                    break;
 
-                    Surface.Clear();
-                    Surface.Print(2, 2, "=== JUEGO INICIADO ===", Color.Green);
-                    Surface.Print(2, 4, $"Bienvenido {gameManager.Prota!.Nombre}. Estas en {gameManager.UbicacionActual!.Nombre}.");
-                }
+                case PantallaUI.MenuPrincipal:
+                    if (GameHost.Instance.Keyboard.IsKeyPressed(Keys.N))
+                    {
+                        IrAPreguntaPrologo();
+                    }
+                    break;
+
+                case PantallaUI.PreguntaPrologo:
+                    if (GameHost.Instance.Keyboard.IsKeyPressed(Keys.D1))
+                    {
+                        IniciarPartida(leerPrologo: true);
+                    }
+                    else if (GameHost.Instance.Keyboard.IsKeyPressed(Keys.D2))
+                    {
+                        IniciarPartida(leerPrologo: false);
+                    }
+                    break;
+
+                case PantallaUI.Juego:
+                    // Aquí entrará luego el input de exploración (WASD, menús numéricos, etc.)
+                    break;
             }
         }
     }
