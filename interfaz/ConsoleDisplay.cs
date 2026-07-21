@@ -12,7 +12,7 @@ namespace SoulAnchor.interfaz
     {
         private GameManager gameManager;
         private bool idiomaSeleccionado = false;
-        private string idioma = "ES"; // Por defecto
+        private string idioma = "ES";
 
         public ConsoleDisplay(int width, int height, GameManager gm) : base(width, height)
         {
@@ -21,7 +21,6 @@ namespace SoulAnchor.interfaz
             UseMouse = true; 
             UseKeyboard = true;
 
-            // Al iniciar, dibujamos la primera pantalla
             DibujarPantallaFirstBoot();
         }
 
@@ -35,27 +34,34 @@ namespace SoulAnchor.interfaz
 
             // Imprimimos el texto en las coordenadas X, Y de la pantalla de la consola
             Surface.Print(20, 10, "Selecciona tu idioma / Select your language:", Color.White);
-            Surface.Print(25, 12, "1. ES (Español)", Color.Cyan);
-            Surface.Print(25, 13, "2. EN (English)", Color.Cyan);
+            Surface.Print(32, 12, "1. ES (Espanol)", Color.Cyan);
+            Surface.Print(32, 13, "2. EN (English)", Color.Cyan);
         }
 
-        public void DibujarMenuPrincipal()
+        public void DibujarMenuPrincipalES()
         {
             Surface.Clear();
-            Surface.Print(20, 5,  "S O U L   A N C H O R", Color.Red); // El título que querías más grande
-            Surface.Print(25, 10, "Nueva Partida", Color.White);
-            Surface.Print(25, 12, "Cargar Partida", Color.White);
-            Surface.Print(25, 14, "Ajustes", Color.White);
-            Surface.Print(25, 16, "Salir", Color.White);
-            // lo programaremos en el método Update leyendo la posición del mouse.
+            Surface.Print(29, 5,  "S O U L   A N C H O R", Color.Red);
+            Surface.Print(32, 10, "Nueva Partida", Color.White);
+            Surface.Print(32, 12, "Cargar Partida", Color.White);
+            Surface.Print(35, 14, "Ajustes", Color.White);
+            Surface.Print(36, 16, "Salir", Color.White);
         }
-
+        public void DibujarMenuPrincipalEN()
+        {
+            Surface.Clear();
+            Surface.Print(29, 5,  "S O U L   A N C H O R", Color.Red);
+            Surface.Print(35, 10, "New Game", Color.White);
+            Surface.Print(35 , 12, "Load Game", Color.White);
+            Surface.Print(35, 14, "Settings", Color.White);
+            Surface.Print(37, 16, "Exit", Color.White);
+        }
         public void DibujarPreguntaPrologo()
         {
             Surface.Clear();
             Surface.Print(15, 10, "¿Quieres leer el prologo?", Color.Yellow);
-            Surface.Print(25, 12, "1. Si", Color.White);
-            Surface.Print(25, 13, "2. No", Color.White);
+            Surface.Print(15, 12, "1. Si", Color.White);
+            Surface.Print(15, 13, "2. No", Color.White);
         }
 
         // ==========================================
@@ -74,13 +80,13 @@ namespace SoulAnchor.interfaz
                 {
                     idioma = "ES";
                     idiomaSeleccionado = true;
-                    DibujarMenuPrincipal();
+                    DibujarMenuPrincipalES();
                 }
                 else if (GameHost.Instance.Keyboard.IsKeyPressed(SadConsole.Input.Keys.D2))
                 {
                     idioma = "EN";
                     idiomaSeleccionado = true;
-                    DibujarMenuPrincipal();
+                    DibujarMenuPrincipalEN();
                 }
             }
             else if (gameManager.EstadoActual == EstadoJuego.MenuPrincipal)
@@ -91,15 +97,15 @@ namespace SoulAnchor.interfaz
                 {
                     DibujarPreguntaPrologo();
                 }
-                // Si pulsa 'S' simulamos que dijo Sí al prólogo
-                else if (GameHost.Instance.Keyboard.IsKeyPressed(SadConsole.Input.Keys.S))
+                // Si pulsa '2' simulamos que dijo No al prólogo
+                else if (GameHost.Instance.Keyboard.IsKeyPressed(SadConsole.Input.Keys.D2))
                 {
                     // Arrancamos el juego a través del GameManager
                     gameManager.IniciarNuevaPartida("Ren");
 
                     Surface.Clear();
                     Surface.Print(2, 2, "=== JUEGO INICIADO ===", Color.Green);
-                    Surface.Print(2, 4, $"Bienvenido {gameManager.Prota!.Nombre}. Estás en {gameManager.UbicacionActual!.Nombre}.");
+                    Surface.Print(2, 4, $"Bienvenido {gameManager.Prota!.Nombre}. Estas en {gameManager.UbicacionActual!.Nombre}.");
                 }
             }
         }
