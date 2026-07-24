@@ -12,6 +12,8 @@ namespace SoulAnchor.Managers
         public bool CombateTerminado { get; private set; }
         public bool Victoria { get; private set; }
 
+        private readonly Random rng = new Random();
+
         public CombatSystem(List<Personaje> equipo, List<Enemigo> encuentro)
         {
             Aliados = equipo;
@@ -24,8 +26,13 @@ namespace SoulAnchor.Managers
         {
             if (!atacante.EstaVivo() || !objetivo.EstaVivo()) return false;
 
-            int danoInfligido = atacante.Atk;
+            // Tabla de enemigos: algunos tienen evasion_pct (ej. Ladrón 20%)
+            if (objetivo.IntentaEvadir(rng))
+            {
+                return false; // el llamador (UI) debería mostrar "¡El ataque fue esquivado!"
+            }
 
+            int danoInfligido = atacante.Atk;
             objetivo.RecibirDano(danoInfligido);
 
             if (!objetivo.EstaVivo())
@@ -36,27 +43,57 @@ namespace SoulAnchor.Managers
             return false; 
         }
 
-        public bool EjecutarMagia(Personaje lanzador, Enemigo objetivo, int danoMagico, int costoMp)
+        // 'elemento' es opcional (ej. "fuego") para que la debilidad elemental del enemigo aplique
+        // (ej. Esqueleto x1.5 contra fuego). Si no se pasa, no hay bonus.
+        public bool EjecutarMagia(Personaje lanzador, Enemigo objetivo, int danoMagico, int costoMp, string? elemento = null)
         {
             if (lanzador is Companero comp && comp.EsTetsu)
             {
                 danoMagico /= 2;
             }
 
+            float multiplicador = objetivo.ObtenerMultiplicadorDebilidad(elemento);
+            danoMagico = (int)(danoMagico * multiplicador);
+
             lanzador.ConsumirMp(costoMp);
             objetivo.RecibirDano(danoMagico);
 
-            // (Podria ajustar esto si quiero que hechizos letales también den Multi-Kill)
-            return false; 
+            return !objetivo.EstaVivo();
+        }
+
+        // Turno del enemigo atacando a un aliado. Aplica el estado on-hit definido en su ficha JSON
+        // (ej. Araña Gigante -> Veneno 3 turnos) si acierta el chance_pct.
+        public void EjecutarAtaqueEnemigo(Enemigo atacante, Personaje objetivo)
+        {
+            if (!atacante.EstaVivo() || !objetivo.EstaVivo()) return;
+
+            objetivo.RecibirDano(atacante.Atk);
+
+            var estado = atacante.IntentarAplicarEstadoOnHit(rng);
+            if (estado != null && objetivo.EstaVivo())
+            {
+                objetivo.AplicarEstado(estado.Status, estado.DuracionTurnos, estado.DanoPorTurno);
+            }
+        }
+
+        // Se llama al cierre de cada ronda completa (todos actuaron) para tickear veneno/quemadura/
+        // sangrado sobre aliados y enemigos por igual. Ver Personaje.ProcesarEstados().
+        public void ProcesarEstadosDeRonda()
+        {
+            foreach (var aliado in Aliados)
+            {
+                if (aliado.EstaVivo()) aliado.ProcesarEstados();
+            }
+
+            foreach (var enemigo in Enemigos)
+            {
+                if (enemigo.EstaVivo()) enemigo.ProcesarEstados();
+            }
         }
 
         public void VerificarEstadoCombate()
         {
-            bool todosEnemigosMuertos = true;
-            foreach (var enemigo in Enemigos)
-            {
-                if (enemigo.EstaVivo()) todosEnemigosMuertos = false;
-            }
+            bool todosEnemigosMuertos = Enemigos.All(e => !e.EstaVivo());
 
             if (todosEnemigosMuertos)
             {
@@ -66,11 +103,7 @@ namespace SoulAnchor.Managers
                 return;
             }
 
-            bool todosAliadosMuertos = true;
-            foreach (var aliado in Aliados)
-            {
-                if (aliado.EstaVivo()) todosAliadosMuertos = false;
-            }
+            bool todosAliadosMuertos = Aliados.All(a => !a.EstaVivo());
 
             if (todosAliadosMuertos)
             {
@@ -96,6 +129,29 @@ namespace SoulAnchor.Managers
             if (vivos.Count > 0)
             {
                 int xpPorCabeza = totalXp / vivos.Count;
+                // NOTA (pre-existente en tu código original): xpPorCabeza se calcula pero nunca se
+                // aplica a los personajes. Falta un Personaje.GanarXp(int) conectado a tu curva de
+                // XP de la sección 6 del GDD antes de poder llamar SubirNivel() automáticamente.
+            }
+
+            var jugador = Aliados.OfType<Jugador>().FirstOrDefault();
+            if (jugador == null) return;
+
+            foreach (var enemigo in Enemigos)
+            {
+                foreach (var drop in enemigo.GenerarDrops(rng))
+                {
+                    if (drop.EsOro)
+                    {
+                        int oroBase = 20 + (enemigo.Nivel * 5);
+                        int oroFinal = oroBase + (oroBase * drop.CantidadExtraPct / 100);
+                        jugador.GanarOro(oroFinal);
+                    }
+                    else
+                    {
+                        jugador.AgregarObjeto(drop.ItemId, 1);
+                    }
+                }
             }
         }
 
@@ -104,7 +160,6 @@ namespace SoulAnchor.Managers
             int nivelPromedioAliados = Aliados.Sum(a => a.Nivel) / Aliados.Count;
             int nivelPromedioEnemigos = Enemigos.Sum(e => e.Nivel) / Enemigos.Count;
 
-            Random rng = new Random();
             int probEscape = 50 + ((nivelPromedioAliados - nivelPromedioEnemigos) * 10);
 
             if (rng.Next(0, 100) < probEscape)

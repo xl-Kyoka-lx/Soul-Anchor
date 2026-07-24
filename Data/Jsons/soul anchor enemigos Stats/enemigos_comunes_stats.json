@@ -1,0 +1,85 @@
+{
+  "enemies": [
+    {
+      "id": "lobo",
+      "hp": 45,
+      "atk": 15,
+      "def": 5,
+      "xp_base": 60,
+      "tipo_ia": "Normal",
+      "traits": {
+        "aggro_override": { "Sumire": 70, "default": 15 }
+      },
+      "drop_table": [
+        { "item_id": "piel_de_lobo", "chance_pct": 60 },
+        { "item_id": "carne", "chance_pct": 40 }
+      ]
+    },
+    {
+      "id": "goblin",
+      "hp": 55,
+      "atk": 12,
+      "def": 8,
+      "xp_base": 70,
+      "tipo_ia": "Humano",
+      "traits": {
+        "usa_pocion_curacion_barata": true
+      },
+      "drop_table": [
+        { "item_id": "garrote_astillado", "chance_pct": 25 },
+        { "item_id": "oro", "chance_pct": 100, "cantidad_extra_pct": 30 }
+      ]
+    },
+    {
+      "id": "ladron",
+      "hp": 60,
+      "atk": 18,
+      "def": 7,
+      "xp_base": 80,
+      "tipo_ia": "Humano",
+      "traits": {
+        "evasion_pct": 20
+      },
+      "drop_table": [
+        { "item_id": "daga_mellada", "chance_pct": 20 },
+        { "item_id": "oro", "chance_pct": 100, "cantidad_extra_pct": 30 }
+      ]
+    },
+    {
+      "id": "esqueleto",
+      "hp": 40,
+      "atk": 14,
+      "def": 12,
+      "xp_base": 65,
+      "tipo_ia": "Normal",
+      "traits": {
+        "debilidad_elemental": "fuego",
+        "debilidad_multiplicador": 1.5
+      },
+      "drop_table": [
+        { "item_id": "hueso", "chance_pct": 70 },
+        { "item_id": "armadura_rota", "chance_pct": 30 }
+      ]
+    },
+    {
+      "id": "arana_gigante",
+      "hp": 50,
+      "atk": 16,
+      "def": 6,
+      "xp_base": 75,
+      "tipo_ia": "Normal",
+      "traits": {
+        "on_hit_apply_status": {
+          "status": "veneno",
+          "duracion_turnos": 3,
+          "chance_pct": 100,
+          "dano_por_turno": 6
+        }
+      },
+      "drop_table": [
+        { "item_id": "seda", "chance_pct": 50 },
+        { "item_id": "veneno", "chance_pct": 30 }
+      ]
+    }
+  ]
+}

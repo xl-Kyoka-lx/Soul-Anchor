@@ -1,0 +1,36 @@
+{
+  "items": [
+    {
+      "id": "carne",
+      "category": "consumible",
+      "valor_oro": 5,
+      "cura_hp_pct": 15,
+      "cura_mp_pct": 0,
+      "usado_en_crafteo": []
+    },
+    {
+      "id": "veneno",
+      "category": "material",
+      "valor_oro": 8,
+      "cura_hp_pct": 0,
+      "cura_mp_pct": 0,
+      "usado_en_crafteo": ["pocion_de_veneno"]
+    },
+    {
+      "id": "hueso",
+      "category": "material",
+      "valor_oro": 3,
+      "cura_hp_pct": 0,
+      "cura_mp_pct": 0,
+      "usado_en_crafteo": []
+    },
+    {
+      "id": "armadura_rota",
+      "category": "basura",
+      "valor_oro": 12,
+      "cura_hp_pct": 0,
+      "cura_mp_pct": 0,
+      "usado_en_crafteo": []
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "es": {
+    "carne": {
+      "name": "Carne",
+      "type_label": "Consumible",
+      "description": "Un corte de carne cruda recién obtenida de la bestia caída. Asada sobre una fogata de campamento, restaura una pequeña porción de vitalidad."
+    },
+    "veneno": {
+      "name": "Veneno",
+      "type_label": "Material de Crafteo",
+      "description": "Una glándula viscosa extraída de una criatura ponzoñosa. Los alquimistas la utilizan como base para preparar venenos de combate."
+    },
+    "hueso": {
+      "name": "Hueso",
+      "type_label": "Material de Crafteo",
+      "description": "Un hueso seco y resistente. Se dice que ciertos herreros y artesanos encuentran uso para él, aunque nadie en las ciudades actuales recuerda exactamente cuál."
+    },
+    "armadura_rota": {
+      "name": "Armadura Rota",
+      "type_label": "Chatarra",
+      "description": "Placas de metal deformadas e inservibles para el combate. Sin valor práctico, pero los herreros pagan por fundir el metal reciclado."
+    }
+  },
+  "en": {
+    "carne": {
+      "name": "Meat",
+      "type_label": "Consumable",
+      "description": "A cut of raw meat freshly taken from the fallen beast. Roasted over a campfire, it restores a small portion of vitality."
+    },
+    "veneno": {
+      "name": "Venom",
+      "type_label": "Crafting Material",
+      "description": "A viscous gland extracted from a poisonous creature. Alchemists use it as a base for brewing combat poisons."
+    },
+    "hueso": {
+      "name": "Bone",
+      "type_label": "Crafting Material",
+      "description": "A dry, sturdy bone. Certain blacksmiths and artisans are said to find use for it, though no one in the current cities quite remembers what for."
+    },
+    "armadura_rota": {
+      "name": "Broken Armor",
+      "type_label": "Scrap",
+      "description": "Metal plates too deformed and useless for combat. No practical value, but blacksmiths pay to melt down the recycled metal."
+    }
+  }
+}

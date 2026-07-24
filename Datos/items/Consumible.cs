@@ -1,3 +1,5 @@
+using SoulAnchor.Datos.Entidades;
+
 namespace SoulAnchor.Datos.Items
 {
     public class Consumible : Item
@@ -17,6 +19,23 @@ namespace SoulAnchor.Datos.Items
             CuraMp = curaMp;
             PorcentajeCura = porcentaje;
             EsMaterialCrafteo = esMaterial;
+        }
+
+        // Aplica el efecto de curación sobre el objetivo. Pensado para conectarse al handler de
+        // "Usar objeto" del menú Mochila (GDD 2.1) una vez que esa pantalla exista.
+        public void AplicarEfecto(Personaje objetivo)
+        {
+            if (CuraHp)
+            {
+                int cantidad = (int)(objetivo.HpMaximo * (PorcentajeCura / 100f));
+                objetivo.Curar(cantidad);
+            }
+
+            if (CuraMp)
+            {
+                int cantidad = (int)(objetivo.MpMaximo * (PorcentajeCura / 100f));
+                objetivo.GanarMp(cantidad);
+            }
         }
     }
 }

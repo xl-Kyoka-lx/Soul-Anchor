@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SoulAnchor.Datos.Entidades;
+using SoulAnchor.Managers;
 
 namespace SoulAnchor.Datos
 {
@@ -23,25 +24,32 @@ namespace SoulAnchor.Datos
             return new Companero("Tetsu", 1, 140, 20, 25, 15); 
         }
 
-        public static Enemigo CrearLobo(int nivelGenerado)
+        // Crea cualquier enemigo cuya ficha exista en Data/Jsons/soul anchor enemigos Stats/*.json.
+        // El escalado por nivel usa el mismo criterio que ya usabas para Lobo/Goblin (base + nivel * x).
+        public static Enemigo CrearDesdeId(string id, int nivelGenerado)
         {
+            var datos = EnemigoDatabase.Obtener(id);
 
-            int hpBase = 40 + (nivelGenerado * 5); 
-            int atkBase = 12 + (nivelGenerado * 2);
-            int defBase = 4 + nivelGenerado;
-            
-            // Los lobos no usaran magia, así que el MP es 0
-            return new Enemigo("Lobo", nivelGenerado, hpBase, 0, atkBase, defBase); 
+            int hpBase = datos.Hp + (nivelGenerado * 5);
+            int atkBase = datos.Atk + (nivelGenerado * 2);
+            int defBase = datos.Def + nivelGenerado;
+
+            TipoIA tipo = Enum.TryParse<TipoIA>(datos.TipoIA, out var parsed) ? parsed : TipoIA.Normal;
+
+            var enemigo = new Enemigo(datos.Id, nivelGenerado, hpBase, 0, atkBase, defBase, tipo);
+            enemigo.AsignarDatos(datos);
+            return enemigo;
         }
 
-        public static Enemigo CrearGoblin(int nivelGenerado)
-        {
-            int hpBase = 45 + (nivelGenerado * 5);
-            int atkBase = 15 + (nivelGenerado * 2);
-            int defBase = 5 + nivelGenerado;
-
-            return new Enemigo("Goblin", nivelGenerado, hpBase, 0, atkBase, defBase);
-        }
+        // Wrappers de compatibilidad: mantienen el nombre de método que ya usa GameManager,
+        // pero ahora leen los stats desde el JSON en vez de tenerlos hardcodeados.
+        // NOTA: los números de Lobo/Goblin cambiaron levemente respecto a los que tenías antes
+        // (ahora usan tu tabla nueva: Lobo HP45/ATK15, Goblin HP55/ATK12).
+        public static Enemigo CrearLobo(int nivelGenerado) => CrearDesdeId("lobo", nivelGenerado);
+        public static Enemigo CrearGoblin(int nivelGenerado) => CrearDesdeId("goblin", nivelGenerado);
+        public static Enemigo CrearLadron(int nivelGenerado) => CrearDesdeId("ladron", nivelGenerado);
+        public static Enemigo CrearEsqueleto(int nivelGenerado) => CrearDesdeId("esqueleto", nivelGenerado);
+        public static Enemigo CrearAranaGigante(int nivelGenerado) => CrearDesdeId("arana_gigante", nivelGenerado);
 
         public static Enemigo CrearEcoDelRift(Jugador jugadorActual)
         {

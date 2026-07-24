@@ -1,0 +1,46 @@
+{
+  "es": {
+    "lobo": {
+      "name": "Lobo",
+      "description": "Una bestia ágil de pelaje gris que caza en manada por el Bosque Este y las llanuras del Desierto. Prefiere lanzarse contra los objetivos más frágiles del grupo."
+    },
+    "goblin": {
+      "name": "Goblin",
+      "description": "Pequeño y astuto, suele cargar consigo pociones baratas robadas para prolongar la pelea. Ataca casi siempre en grupos numerosos."
+    },
+    "ladron": {
+      "name": "Ladrón",
+      "description": "Un humano fuera de la ley, rápido y escurridizo. Su entrenamiento en el sigilo le da una notable capacidad para esquivar golpes."
+    },
+    "esqueleto": {
+      "name": "Esqueleto",
+      "description": "Restos animados por magia residual. Sus huesos secos y quebradizos arden con facilidad ante el fuego."
+    },
+    "arana_gigante": {
+      "name": "Araña Gigante",
+      "description": "Habitante de las cuevas del bosque. Inyecta un veneno persistente con cada mordida certera."
+    }
+  },
+  "en": {
+    "lobo": {
+      "name": "Wolf",
+      "description": "An agile gray-furred beast that hunts in packs through the Eastern Forest and desert plains. It prefers to target the frailest member of the group."
+    },
+    "goblin": {
+      "name": "Goblin",
+      "description": "Small and cunning, it often carries cheap stolen potions to stretch out the fight. Almost always attacks in large groups."
+    },
+    "ladron": {
+      "name": "Thief",
+      "description": "An outlaw human, fast and elusive. Their stealth training gives them a notable ability to dodge blows."
+    },
+    "esqueleto": {
+      "name": "Skeleton",
+      "description": "Remains animated by residual magic. Its dry, brittle bones burn easily when exposed to fire."
+    },
+    "arana_gigante": {
+      "name": "Giant Spider",
+      "description": "A dweller of the forest caves. It injects a lingering venom with every solid bite."
+    }
+  }
+}

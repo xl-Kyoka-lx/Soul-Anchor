@@ -15,7 +15,7 @@ namespace SoulAnchor.interfaz
         MenuPrincipal,
         NombrePersonaje,
         PreguntaPrologo,
-        TextoHistoria,   // pantalla genérica de texto secuencial (prólogo, intro, reclutamiento, etc.)
+        TextoHistoria,   // pantalla genérica de texto secuencial (prólogo, intro, reclutamiento, preguntar...)
         Ciudad,
         Gremio,
         Exploracion      // placeholder hasta que se implemente el mundo/mapa real
@@ -44,7 +44,7 @@ namespace SoulAnchor.interfaz
         // Recordamos qué opción tiene el mouse encima para el efecto hover (GDD 15.4)
         private OpcionMenu? opcionConHover = null;
 
-        // Qué hacer cuando termina la secuencia de texto activa (prólogo, intro, reclutamiento...)
+        // Qué hacer cuando termina la secuencia de texto activa (prólogo, intro, reclutamiento, preguntar...)
         private Action? alTerminarSecuencia;
 
         // Nombre del protagonista elegido por el jugador. "Ren" por defecto, editable en DibujarNombrePersonaje.
@@ -129,7 +129,7 @@ namespace SoulAnchor.interfaz
             AgregarOpcion(25, 13, LocalizationManager.Obtener(idioma, "prologo_no"), () => IniciarPartida(leerPrologo: false));
         }
 
-        // Pantalla genérica para cualquier secuencia de texto narrativo (prólogo, intro, reclutamiento...)
+        // Pantalla genérica para cualquier secuencia de texto narrativo (prólogo, intro, reclutamiento, preguntar...)
         public void DibujarTextoHistoria()
         {
             Surface.Clear();
@@ -173,15 +173,6 @@ namespace SoulAnchor.interfaz
             return lineas;
         }
 
-        // Header compartido por las pantallas "en partida" (Ciudad, Gremio...), igual al formato del GDD:
-        // === SOUL ANCHOR ===
-        // Ubicación: X
-        // Oro: N
-        // Científico (Lvl N): HP X/X | MP X/X
-        // Niña (Lvl N): HP X/X | MP X/X
-        // Hombre (Lvl N): HP X/X | MP X/X
-        // ========================================
-        // Devuelve la fila (Y) donde deberían empezar las opciones numeradas.
         private int DibujarHeaderJuego(string ubicacionTexto)
         {
             Surface.Print(2, 1, "=== SOUL ANCHOR ===", Color.Yellow);
@@ -202,8 +193,6 @@ namespace SoulAnchor.interfaz
             return y;
         }
 
-        // Ciudad del Oeste (u otra ciudad). Al inicio del juego (antes de colocar el anuncio en el
-        // gremio) solo se puede ir a la Posada o al Gremio, tal como indica el GDD Parte 2.
         public void DibujarCiudad()
         {
             Surface.Clear();
@@ -224,7 +213,7 @@ namespace SoulAnchor.interfaz
                 AgregarOpcion(2, y, LocalizationManager.Obtener(idioma, "ciudad_herreria"), MostrarNoImplementado); y++;
                 AgregarOpcion(2, y, LocalizationManager.Obtener(idioma, "ciudad_tp"), MostrarNoImplementado); y++;
                 AgregarOpcion(2, y, LocalizationManager.Obtener(idioma, "ciudad_posada"), IrAPosada); y++;
-                AgregarOpcion(2, y, LocalizationManager.Obtener(idioma, "ciudad_preguntar"), MostrarNoImplementado); y++;
+                AgregarOpcion(2, y, LocalizationManager.Obtener(idioma, "ciudad_preguntar"), IrAPreguntar); y++;
                 AgregarOpcion(2, y, LocalizationManager.Obtener(idioma, "ciudad_gremio"), IrAGremio); y++;
                 AgregarOpcion(2, y, LocalizationManager.Obtener(idioma, "ciudad_salir_mapa"), IrAExploracionPlaceholder);
             }
@@ -247,7 +236,6 @@ namespace SoulAnchor.interfaz
             {
                 Surface.Print(2, y, LocalizationManager.Obtener(idioma, "gremio_sin_misiones"), Color.Gray);
                 y += 2;
-                // TODO: sistema real de misiones del gremio (GDD sección 11)
             }
 
             AgregarOpcion(2, y, LocalizationManager.Obtener(idioma, "gremio_volver"), VolverACiudadDesdeGremio);
@@ -267,13 +255,11 @@ namespace SoulAnchor.interfaz
             AgregarOpcion(2, y, LocalizationManager.Obtener(idioma, "gremio_volver"), VolverACiudadDesdeExploracion);
         }
 
-        // Muestra feedback visible cuando se presiona (mouse o teclado) una opción que aún no está implementada.
         private void MostrarNoImplementado()
         {
             Surface.Print(2, 21, LocalizationManager.Obtener(idioma, "opcion_no_implementada"), Color.Red);
         }
 
-        // Registra una opción numerada (1., 2., 3...) clickeable y accesible por teclado.
         private void AgregarOpcion(int x, int y, string texto, Action accion)
         {
             int numero = opcionesActuales.Count + 1;
@@ -282,7 +268,6 @@ namespace SoulAnchor.interfaz
             opcionesActuales.Add(new OpcionMenu { Texto = textoConNumero, X = x, Y = y, Accion = accion });
         }
 
-        // Igual que AgregarOpcion, pero sin número, para el Menú Principal (mouse-only por GDD 15.2)
         private void AgregarOpcionSinNumero(int x, int y, string texto, Action accion)
         {
             Surface.Print(x, y, texto, Color.White);
@@ -329,7 +314,6 @@ namespace SoulAnchor.interfaz
 
             if (gameManager.Prota == null)
             {
-                // El sistema de carga real todavía no restaura al jugador; avisamos y nos quedamos en el menú.
                 DibujarMenuPrincipal();
                 Surface.Print(5, 19, TextoEncoding.ACP437(idioma == "en"
                     ? "(No working save system yet)"
@@ -427,7 +411,18 @@ namespace SoulAnchor.interfaz
             DibujarCiudad();
         }
 
-        // Carga y muestra una secuencia de texto; al terminar (última página), ejecuta 'alTerminar'.
+        private void IrAPreguntar()
+        {
+            string archivoDialogo = gameManager.Preguntas.ObtenerDialogoActivo(gameManager);
+            MostrarSecuencia(archivoDialogo, VolverACiudadDesdePreguntar);
+        }
+
+        private void VolverACiudadDesdePreguntar()
+        {
+            pantallaActual = PantallaUI.Ciudad;
+            DibujarCiudad();
+        }
+
         private void MostrarSecuencia(string nombreArchivo, Action alTerminar)
         {
             gameManager.Historia.IniciarSecuencia(nombreArchivo, idioma);
@@ -452,9 +447,9 @@ namespace SoulAnchor.interfaz
             }
         }
 
-        // ==========================================
+        // ================
         // LÓGICA DE MOUSE
-        // ==========================================
+        // ================
 
         public override bool ProcessMouse(MouseScreenObjectState state)
         {
@@ -473,7 +468,6 @@ namespace SoulAnchor.interfaz
             {
                 if (opcionConHover != null)
                 {
-                    // El mouse salió de toda opción; quitamos el hover visual
                     RedibujarPantallaActual();
                     opcionConHover = null;
                 }
@@ -492,7 +486,6 @@ namespace SoulAnchor.interfaz
                 }
             }
 
-            // Efecto hover (GDD 15.4): oscurece el texto de la opción bajo el cursor
             if (opcionBajoElMouse != opcionConHover)
             {
                 RedibujarPantallaActual();
@@ -544,9 +537,9 @@ namespace SoulAnchor.interfaz
             }
         }
 
-        // ==========================================
-        // LÓGICA DE TECLADO (input híbrido, GDD 15.1)
-        // ==========================================
+        // ===================
+        // LÓGICA DE TECLADO
+        // ===================
 
         public override void Update(TimeSpan delta)
         {
@@ -584,8 +577,6 @@ namespace SoulAnchor.interfaz
             }
         }
 
-        // Revisa si se presionó una tecla numérica (1-9) y ejecuta la opción correspondiente,
-        // igual que si el jugador le hubiera hecho click. Funciona para cualquier pantalla numerada.
         private void ProcesarInputNumerico()
         {
             for (int i = 0; i < teclasNumericas.Length; i++)
@@ -601,8 +592,6 @@ namespace SoulAnchor.interfaz
             }
         }
 
-        // Captura texto libre para el campo de nombre: letras/números se agregan, Backspace borra.
-        // Enter se maneja aparte (confirma el nombre), no como texto.
         private void ProcesarInputTexto()
         {
             bool cambio = false;

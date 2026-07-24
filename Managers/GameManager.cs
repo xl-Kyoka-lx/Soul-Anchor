@@ -35,6 +35,7 @@ namespace SoulAnchor.Managers
         // Managers secundarios
         public QuestManager Gremio { get; private set; }
         public StoryManager Historia { get; private set; }
+        public PreguntaManager Preguntas { get; private set; }
         public CombatSystem? CombateActual { get; private set; }
 
         // Progreso narrativo mínimo: ¿ya se publicó el anuncio buscando el artefacto?
@@ -51,6 +52,7 @@ namespace SoulAnchor.Managers
             EstadoActual = EstadoJuego.MenuPrincipal;
             Gremio = new QuestManager();
             Historia = new StoryManager();
+            Preguntas = new PreguntaManager();
             GrupoActivo = new List<Personaje>();
         }
 
