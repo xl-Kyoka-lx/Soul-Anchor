@@ -8,9 +8,6 @@ using System.Linq;
 
 namespace SoulAnchor.Managers
 {
-    // Carga y cachea todas las fichas de enemigos desde Data/Jsons/soul anchor enemigos Stats/*.json.
-    // Lee TODOS los .json de esa carpeta (podés separar comunes/mini-jefes/rift en archivos distintos,
-    // igual que ya haces con las armas) y los mezcla en un solo diccionario por id.
     public static class EnemigoDatabase
     {
         private static readonly string carpetaBase = Path.Combine(AppContext.BaseDirectory, "Data", "Jsons", "soul anchor enemigos Stats");

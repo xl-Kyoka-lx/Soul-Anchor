@@ -22,7 +22,6 @@ namespace SoulAnchor.Datos.Items
         }
 
         // Aplica el efecto de curación sobre el objetivo. Pensado para conectarse al handler de
-        // "Usar objeto" del menú Mochila (GDD 2.1) una vez que esa pantalla exista.
         public void AplicarEfecto(Personaje objetivo)
         {
             if (CuraHp)

@@ -74,8 +74,6 @@ namespace SoulAnchor.interfaz
             AgregarOpcion(25, 12, LocalizationManager.Obtener(idioma, "idioma_opcion_es"), () => SeleccionarIdioma("es"));
             AgregarOpcion(25, 13, LocalizationManager.Obtener(idioma, "idioma_opcion_en"), () => SeleccionarIdioma("en"));
         }
-
-        //el Menú Principal es exclusivamente por mouse hasta iniciar/cargar partida
   
         public void DibujarMenuPrincipal()
         {

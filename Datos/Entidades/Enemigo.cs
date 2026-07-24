@@ -4,8 +4,6 @@ using SoulAnchor.Datos.Mundo;
 
 namespace SoulAnchor.Datos.Entidades
 {
-    // Enum de comportamiento general. Las mecánicas finas (evasión, debilidad, drops, aggro)
-    // ahora viven en EnemigoData/EnemigoTraits, cargadas desde JSON vía EnemigoDatabase.
     public enum TipoIA 
     { 
         Normal, 
@@ -46,8 +44,6 @@ namespace SoulAnchor.Datos.Entidades
             }
         }
 
-        // Vincula este enemigo a su ficha JSON. Se llama justo después del constructor,
-        // normalmente desde Database.CrearDesdeId.
         public void AsignarDatos(EnemigoData datos)
         {
             Datos = datos;

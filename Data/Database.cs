@@ -24,8 +24,6 @@ namespace SoulAnchor.Datos
             return new Companero("Tetsu", 1, 140, 20, 25, 15); 
         }
 
-        // Crea cualquier enemigo cuya ficha exista en Data/Jsons/soul anchor enemigos Stats/*.json.
-        // El escalado por nivel usa el mismo criterio que ya usabas para Lobo/Goblin (base + nivel * x).
         public static Enemigo CrearDesdeId(string id, int nivelGenerado)
         {
             var datos = EnemigoDatabase.Obtener(id);
@@ -43,8 +41,6 @@ namespace SoulAnchor.Datos
 
         // Wrappers de compatibilidad: mantienen el nombre de método que ya usa GameManager,
         // pero ahora leen los stats desde el JSON en vez de tenerlos hardcodeados.
-        // NOTA: los números de Lobo/Goblin cambiaron levemente respecto a los que tenías antes
-        // (ahora usan tu tabla nueva: Lobo HP45/ATK15, Goblin HP55/ATK12).
         public static Enemigo CrearLobo(int nivelGenerado) => CrearDesdeId("lobo", nivelGenerado);
         public static Enemigo CrearGoblin(int nivelGenerado) => CrearDesdeId("goblin", nivelGenerado);
         public static Enemigo CrearLadron(int nivelGenerado) => CrearDesdeId("ladron", nivelGenerado);

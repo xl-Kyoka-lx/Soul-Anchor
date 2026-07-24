@@ -24,7 +24,7 @@ namespace SoulAnchor.Datos.Items
         public float CuraMpPct { get; set; }
 
         // Ids de recetas de CraftingManager que consumen este objeto como ingrediente.
-        // Vacío si todavía no tiene ningún uso implementado (ej. Hueso).
+        // Vacío para los que todavía no tiene ningún uso implementado
         [JsonPropertyName("usado_en_crafteo")]
         public List<string> UsadoEnCrafteo { get; set; } = new();
     }

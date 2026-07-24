@@ -76,8 +76,7 @@ namespace SoulAnchor.Datos.Entidades
             return HpActual > 0;
         }
 
-        // Aplica o refresca un estado alterado. Si ya está activo, toma la duración/daño mayor
-        // en vez de apilar turnos nuevos (evita estados "infinitos" por spam del mismo ataque).
+        //evita estados infinitos por spam del mismo ataque
         public void AplicarEstado(string tipo, int turnos, int danoPorTurno = 0)
         {
             var existente = EstadosAlterados.Find(e => e.Tipo == tipo);

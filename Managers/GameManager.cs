@@ -4,7 +4,6 @@ using SoulAnchor.Datos;
 using SoulAnchor.Datos.Entidades;
 using SoulAnchor.Datos.Mundo;
 
-// que paja, ia
 namespace SoulAnchor.Managers
 {
     public enum EstadoJuego { MenuPrincipal, Explorando, EnCiudad, EnCombate, FinJuego }
