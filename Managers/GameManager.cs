@@ -12,34 +12,18 @@ namespace SoulAnchor.Managers
     public class GameManager
     {
         public EstadoJuego EstadoActual { get; private set; }
-
-        // Prota puede ser null hasta que se llame a IniciarNuevaPartida() o CargarPartida()
         public Jugador? Prota { get; private set; }
         public List<Personaje> GrupoActivo { get; private set; }
-
-        // Sumire y Tetsu existen desde el inicio de la partida, pero no se unen al GrupoActivo
-        // (ni aparecen en el header de stats) hasta que UnirCompanieros() se llama, tras el
-        // reclutamiento narrativo en el gremio (ver GDD Parte 2).
         private Companero? sumire;
         private Companero? tetsu;
-
         public float PosicionX { get; private set; }
         public float PosicionY { get; private set; }
-
-        // Puede ser null mientras el jugador está viajando (fuera de una ciudad)
         public Ubicacion? UbicacionActual { get; private set; }
-
-        // Puede ser null si no hay un destino fijado
         public Ubicacion? DestinoFijado { get; private set; }
-
-        // Managers secundarios
         public QuestManager Gremio { get; private set; }
         public StoryManager Historia { get; private set; }
         public PreguntaManager Preguntas { get; private set; }
         public CombatSystem? CombateActual { get; private set; }
-
-        // Progreso narrativo mínimo: ¿ya se publicó el anuncio buscando el artefacto?
-        // Antes de esto, la Ciudad del Oeste solo ofrece Posada y Gremio (ver GDD Parte 2).
         public bool AnuncioColocado { get; private set; }
 
         public void ColocarAnuncio()
@@ -56,13 +40,8 @@ namespace SoulAnchor.Managers
             GrupoActivo = new List<Personaje>();
         }
 
-        // 1. INICIO Y CARGA DE PARTIDA
-
         public void IniciarNuevaPartida(string nombreProta)
         {
-            // Creamos al equipo desde la Database. Sumire y Tetsu existen desde ya (tienen stats,
-            // pueden subir de nivel más adelante si hiciera falta), pero todavía no forman parte
-            // del grupo activo: se unen narrativamente al terminar el reclutamiento en el gremio.
             Prota = Database.CrearRen(nombreProta);
             sumire = Database.CrearSumire();
             tetsu = Database.CrearTetsu();
@@ -78,8 +57,6 @@ namespace SoulAnchor.Managers
             EstadoActual = EstadoJuego.EnCiudad; // Empezamos a salvo
         }
 
-        // Se llama cuando el reclutamiento narrativo termina (tras colocar el anuncio en el gremio).
-        // Suma a Sumire y Tetsu al grupo activo si todavía no estaban.
         public void UnirCompanieros()
         {
             if (sumire != null && !GrupoActivo.Contains(sumire))
@@ -102,9 +79,9 @@ namespace SoulAnchor.Managers
             }
         }
 
-        // ==========================================
+        // ==================================
         // 2. SISTEMA DE EXPLORACIÓN Y VIAJE
-        // ==========================================
+        // ==================================
 
         public void FijarDestino(Ubicacion nuevoDestino)
         {
@@ -150,9 +127,9 @@ namespace SoulAnchor.Managers
             }
         }
 
-        // ==========================================
+        // ========================
         // 3. TRANSICIÓN A COMBATE
-        // ==========================================
+        // ========================
 
         private void GenerarCombateSalvaje()
         {

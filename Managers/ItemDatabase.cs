@@ -8,17 +8,12 @@ using SoulAnchor.Datos.Items;
 
 namespace SoulAnchor.Managers
 {
-    // Carga Data/Jsons/soul anchor items Stats/*.json (stats) y
-    // Data/Jsons/Localization/objetos_localization.json (nombre/descripción por idioma),
-    // y arma instancias concretas de Item (Consumible/Material/ObjetoVendible) según su 'category'.
     public static class ItemDatabase
     {
         private static readonly string carpetaStats = Path.Combine(AppContext.BaseDirectory, "Data", "Jsons", "soul anchor items Stats");
         private static readonly string rutaLocalizacion = Path.Combine(AppContext.BaseDirectory, "Data", "Jsons", "Localization", "objetos_localization.json");
-
         private static Dictionary<string, ItemData>? datos;
         private static Dictionary<string, Dictionary<string, (string Nombre, string Descripcion)>>? localizacion;
-
         public static void Cargar()
         {
             if (datos != null) return;
@@ -116,9 +111,6 @@ namespace SoulAnchor.Managers
             Cargar();
             return datos != null && datos.ContainsKey(id);
         }
-
-        // Fábrica: construye la instancia concreta (Consumible/Material/ObjetoVendible) leyendo
-        // stats + localización. Usar esto en vez de instanciar Consumible/Material a mano.
         public static Item CrearInstancia(string id, string idioma = "es")
         {
             var d = ObtenerDatos(id);

@@ -23,11 +23,7 @@ namespace SoulAnchor.Datos.Entidades
     {
         public TipoIA Comportamiento { get; private set; }
         public bool EsJefe { get; private set; }
-        
-        public int PocionesDisponibles { get; private set; } 
-
-        // Ficha de datos leída de JSON. Puede ser null para enemigos construidos "a mano"
-        // (ej. Eco del Rift, que clona stats del jugador y no tiene ficha propia).
+        public int PocionesDisponibles { get; private set; }
         public EnemigoData? Datos { get; private set; }
 
         public Enemigo(string nombre, int nivel, int hpMax, int mpMax, int atk, int def, TipoIA comportamiento = TipoIA.Normal, bool esJefe = false) 
@@ -68,17 +64,12 @@ namespace SoulAnchor.Datos.Entidades
             
             return xp;
         }
-
-        // Tabla de enemigos: % de esquivar un ataque físico entrante (ej. Ladrón 20%).
         public bool IntentaEvadir(Random rng)
         {
             int evasion = Datos?.Traits.EvasionPct ?? 0;
             if (evasion <= 0) return false;
             return rng.Next(0, 100) < evasion;
         }
-
-        // Multiplicador de daño si el elemento del ataque coincide con la debilidad del enemigo
-        // (ej. Esqueleto débil a "fuego" -> x1.5). Devuelve 1.0 si no aplica ninguna debilidad.
         public float ObtenerMultiplicadorDebilidad(string? elementoAtaque)
         {
             if (Datos == null || string.IsNullOrEmpty(Datos.Traits.DebilidadElemental)) return 1.0f;
@@ -92,8 +83,6 @@ namespace SoulAnchor.Datos.Entidades
             return 1.0f;
         }
 
-        // Estado que este enemigo aplica al golpear físicamente (ej. Araña Gigante -> Veneno).
-        // Devuelve null si no tiene ninguno configurado o si falla el chance_pct.
         public OnHitStatus? IntentarAplicarEstadoOnHit(Random rng)
         {
             var config = Datos?.Traits.OnHitApplyStatus;
@@ -102,7 +91,6 @@ namespace SoulAnchor.Datos.Entidades
             return rng.Next(0, 100) < config.ChancePct ? config : null;
         }
 
-        // GDD 17.1: enemigos "Humano" (y algunos élite) pueden curarse con pociones limitadas.
         public bool DeberiaUsarPocion()
         {
             bool tienePocion = PocionesDisponibles > 0;
@@ -120,8 +108,6 @@ namespace SoulAnchor.Datos.Entidades
             Curar((int)(HpMaximo * 0.4f)); // poción barata genérica: ~40% HP
         }
 
-        // Tira la drop_table del JSON. "oro" se separa del resto porque no es un objeto de mochila
-        // (CombatSystem lo convierte en Jugador.GanarOro en vez de AgregarObjeto).
         public List<(string ItemId, bool EsOro, int CantidadExtraPct)> GenerarDrops(Random rng)
         {
             var resultado = new List<(string, bool, int)>();
@@ -154,7 +140,6 @@ namespace SoulAnchor.Datos.Entidades
 
                 if (aggroOverride != null)
                 {
-                    // Prioridad definida en el JSON (ej. lobo.aggro_override: {"Sumire": 70, "default": 15})
                     if (aggroOverride.TryGetValue(aliado.Nombre, out int pesoJson))
                     {
                         pesoActual = pesoJson;
@@ -166,7 +151,6 @@ namespace SoulAnchor.Datos.Entidades
                 }
                 else
                 {
-                    // Fallback: comportamiento clásico del GDD 17.1 para enemigos sin trait definido
                     if (aliado.Nombre == "Sumire")
                     {
                         pesoActual = 60;

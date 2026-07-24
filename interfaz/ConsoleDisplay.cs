@@ -2,52 +2,43 @@ using System;
 using System.Collections.Generic;
 using SadConsole;
 using SadConsole.Input;
-using SadRogue.Primitives; // Librería de colores y posiciones en SadConsole
+using SadRogue.Primitives;
 using SoulAnchor.Managers;
 
 namespace SoulAnchor.interfaz
 {
-    // Estados propios de la pantalla de UI, separados del EstadoJuego del GameManager,
-    // porque esto es flujo de presentación/menús, no estado real del mundo del juego.
     public enum PantallaUI
     {
         SeleccionIdioma,
         MenuPrincipal,
         NombrePersonaje,
         PreguntaPrologo,
-        TextoHistoria,   // pantalla genérica de texto secuencial (prólogo, intro, reclutamiento, preguntar...)
+        TextoHistoria,
         Ciudad,
         Gremio,
-        Exploracion      // placeholder hasta que se implemente el mundo/mapa real
+        Exploracion
     }
 
-    // Representa una opción de menú numerada y clickeable en la pantalla actual.
     public class OpcionMenu
     {
-        public string Texto = "";   // Ya incluye el prefijo numérico, ej: "1. Gremio"
+        public string Texto = "";
         public int X;
         public int Y;
         public Action? Accion;
     }
 
-    // Heredamos de 'Console' para que esta clase sea una pantalla dibujable en SadConsole
     public class ConsoleDisplay : SadConsole.Console
     {
         private GameManager gameManager;
         private PantallaUI pantallaActual;
-        private string idioma = "es"; // "es" o "en", coincide con las claves del JSON
+        private string idioma = "es";
 
-        // Opciones numeradas/clickeables de la pantalla que se está mostrando ahora mismo.
-        // El índice en la lista (+1) es el número que el jugador ve y puede presionar en el teclado.
         private List<OpcionMenu> opcionesActuales = new List<OpcionMenu>();
 
-        // Recordamos qué opción tiene el mouse encima para el efecto hover (GDD 15.4)
         private OpcionMenu? opcionConHover = null;
 
-        // Qué hacer cuando termina la secuencia de texto activa (prólogo, intro, reclutamiento, preguntar...)
         private Action? alTerminarSecuencia;
 
-        // Nombre del protagonista elegido por el jugador. "Ren" por defecto, editable en DibujarNombrePersonaje.
         private string nombreJugador = "Ren";
         private const int LongitudMaximaNombre = 12;
 
@@ -69,9 +60,9 @@ namespace SoulAnchor.interfaz
             DibujarPantallaFirstBoot();
         }
 
-        // ==========================================
+        // ====================
         // DIBUJO DE PANTALLAS
-        // ==========================================
+        // ====================
 
         public void DibujarPantallaFirstBoot()
         {
@@ -274,9 +265,9 @@ namespace SoulAnchor.interfaz
             opcionesActuales.Add(new OpcionMenu { Texto = texto, X = x, Y = y, Accion = accion });
         }
 
-        // ==========================================
+        // ========================
         // TRANSICIONES DE ESTADO
-        // ==========================================
+        // ========================
 
         private void SeleccionarIdioma(string idiomaElegido)
         {

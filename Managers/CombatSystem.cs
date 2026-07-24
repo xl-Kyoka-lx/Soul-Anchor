@@ -42,9 +42,6 @@ namespace SoulAnchor.Managers
 
             return false; 
         }
-
-        // 'elemento' es opcional (ej. "fuego") para que la debilidad elemental del enemigo aplique
-        // (ej. Esqueleto x1.5 contra fuego). Si no se pasa, no hay bonus.
         public bool EjecutarMagia(Personaje lanzador, Enemigo objetivo, int danoMagico, int costoMp, string? elemento = null)
         {
             if (lanzador is Companero comp && comp.EsTetsu)
@@ -60,9 +57,6 @@ namespace SoulAnchor.Managers
 
             return !objetivo.EstaVivo();
         }
-
-        // Turno del enemigo atacando a un aliado. Aplica el estado on-hit definido en su ficha JSON
-        // (ej. Araña Gigante -> Veneno 3 turnos) si acierta el chance_pct.
         public void EjecutarAtaqueEnemigo(Enemigo atacante, Personaje objetivo)
         {
             if (!atacante.EstaVivo() || !objetivo.EstaVivo()) return;
@@ -75,9 +69,6 @@ namespace SoulAnchor.Managers
                 objetivo.AplicarEstado(estado.Status, estado.DuracionTurnos, estado.DanoPorTurno);
             }
         }
-
-        // Se llama al cierre de cada ronda completa (todos actuaron) para tickear veneno/quemadura/
-        // sangrado sobre aliados y enemigos por igual. Ver Personaje.ProcesarEstados().
         public void ProcesarEstadosDeRonda()
         {
             foreach (var aliado in Aliados)
@@ -129,9 +120,7 @@ namespace SoulAnchor.Managers
             if (vivos.Count > 0)
             {
                 int xpPorCabeza = totalXp / vivos.Count;
-                // NOTA (pre-existente en tu código original): xpPorCabeza se calcula pero nunca se
-                // aplica a los personajes. Falta un Personaje.GanarXp(int) conectado a tu curva de
-                // XP de la sección 6 del GDD antes de poder llamar SubirNivel() automáticamente.
+
             }
 
             var jugador = Aliados.OfType<Jugador>().FirstOrDefault();

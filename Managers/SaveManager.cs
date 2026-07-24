@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Text.Json;
 using System.Collections.Generic;
-// no se hacer un sistema de guardado
 namespace SoulAnchor.Managers
 {
     public class DatosGuardado
@@ -10,11 +9,9 @@ namespace SoulAnchor.Managers
         // Posición en el mundo
         public float UbicacionX { get; set; }
         public float UbicacionY { get; set; }
-
         // Inventario y Economía
         public int Oro { get; set; }
         public Dictionary<string, int>? Mochila { get; set; }
-
         // Progresión de Ren (El Jugador)
         public int NivelJugador { get; set; }
         public int HpJugador { get; set; }

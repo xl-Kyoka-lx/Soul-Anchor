@@ -5,28 +5,18 @@ using System.Text.Json;
 
 namespace SoulAnchor.Managers
 {
-    // Maneja cualquier secuencia de texto narrativo (prólogo, introducción, reclutamiento, etc.)
-    // Todas viven como JSON en Data/Jsons/Localization/Historia/, con la misma forma: { "es": [...], "en": [...] }
     public class StoryManager
     {
         private static readonly string carpetaBase = Path.Combine(AppContext.BaseDirectory, "Data", "Jsons", "Localization", "Historia");
-
-        // Cache de archivos ya leídos de disco, para no releer el mismo JSON varias veces en la misma partida
         private Dictionary<string, Dictionary<string, List<string>>> cache = new();
-
         private List<string>? paginasActivas;
         private int paginaActual;
-
         public bool SecuenciaTerminada => paginasActivas == null || paginaActual >= paginasActivas.Count;
-
         public string PaginaActualTexto => paginasActivas != null && paginaActual < paginasActivas.Count
             ? TextoEncoding.ACP437(paginasActivas[paginaActual])
             : string.Empty;
-
         public int PaginaActualIndice => paginaActual;
         public int TotalPaginas => paginasActivas?.Count ?? 0;
-
-        // nombreArchivo ej: "Prologo_localizacion.json", "Intro_localizacion.json", "Reclutamiento_localizacion.json"
         public void IniciarSecuencia(string nombreArchivo, string idioma)
         {
             paginaActual = 0;
