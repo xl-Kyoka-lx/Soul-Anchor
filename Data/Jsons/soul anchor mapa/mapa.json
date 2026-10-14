@@ -1,0 +1,39 @@
+{
+  "limite": 13,
+
+  "ubicaciones": [
+    { "id": "oeste",    "nombre": "Ciudad del Oeste",  "x": -11, "y": 5,  "tipo": "ciudad", "implementada": true },
+    { "id": "sur",      "nombre": "Ciudad del Sur",    "x": -12, "y": -4, "tipo": "ciudad", "implementada": true },
+    { "id": "este",     "nombre": "Ciudad del Este",   "x": 7,   "y": -2, "tipo": "ciudad", "implementada": true },
+    { "id": "norte",    "nombre": "Ciudad del Norte",  "x": -2,  "y": 11, "tipo": "ciudad", "implementada": true },
+    { "id": "pueblo",   "nombre": "Pueblo Intermedio", "x": -10, "y": 2,  "tipo": "pueblo", "implementada": false },
+    { "id": "cueva",    "nombre": "Cueva",             "x": 4,   "y": 7,  "tipo": "cueva",  "implementada": false },
+    { "id": "cueva_m1", "nombre": "Cueva M",           "x": 9,   "y": -1, "tipo": "cueva",  "implementada": false },
+    { "id": "cueva_m2", "nombre": "Cueva M2",          "x": 9,   "y": -2, "tipo": "cueva",  "implementada": false },
+    { "id": "cueva_m3", "nombre": "Cueva M3",          "x": 9,   "y": -3, "tipo": "cueva",  "implementada": false },
+    { "id": "tp_rift",  "nombre": "Portal del Rift",   "x": 11,  "y": 2,  "tipo": "tp",     "implementada": false }
+  ],
+
+  "zonas": [
+    { "id": "rift",     "min_x": 9,   "max_x": 13, "min_y": -13, "max_y": 13, "tabla_monstruos": "rift",     "multiplicador_encuentros": 1.0 },
+    { "id": "desierto", "min_x": -13, "max_x": 13, "min_y": 8,   "max_y": 13, "tabla_monstruos": "desierto", "multiplicador_encuentros": 1.0 },
+    { "id": "bosque",   "min_x": -4,  "max_x": 13, "min_y": -13, "max_y": 13, "tabla_monstruos": "bosque",   "multiplicador_encuentros": 1.0 }
+  ],
+
+  "zona_por_defecto": { "id": "llanura", "tabla_monstruos": "bosque", "multiplicador_encuentros": 0.25 },
+
+  "obstaculos": [
+    { "id": "rio", "min_x": -13, "max_x": 5, "min_y": 0, "max_y": 0, "evento": "rio" }
+  ],
+
+  "puentes": [
+    {
+      "id": "puente",
+      "x": -9,
+      "y": 0,
+      "flag_requerido": "puente_reparado",
+      "evento_destruido": "puente_destruido",
+      "avisos_en": [ { "x": -9, "y": 1 }, { "x": -9, "y": -1 } ]
+    }
+  ]
+}
