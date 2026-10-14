@@ -1,0 +1,14 @@
+{
+  "es": {
+    "bola_de_fuego": {
+      "name": "Bola de Fuego",
+      "description": "Una esfera de fuego concentrado que estalla al impactar, con probabilidad de dejar al objetivo ardiendo."
+    }
+  },
+  "en": {
+    "bola_de_fuego": {
+      "name": "Fireball",
+      "description": "A concentrated sphere of fire that bursts on impact, with a chance to leave the target burning."
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "hechizos": [
+    {
+      "id": "bola_de_fuego",
+      "elemento": "fuego",
+      "dano_base": 20,
+      "dano_por_nivel": 1.5,
+      "costo_mp": 15,
+      "efecto_extra": {
+        "status": "quemadura",
+        "chance_pct": 20,
+        "duracion_turnos": 2,
+        "dano_por_turno": 5
+      }
+    }
+  ]
+}

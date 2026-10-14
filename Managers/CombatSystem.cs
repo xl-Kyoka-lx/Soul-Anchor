@@ -42,7 +42,14 @@ namespace SoulAnchor.Managers
 
             return false; 
         }
-        public bool EjecutarMagia(Personaje lanzador, Enemigo objetivo, int danoMagico, int costoMp, string? elemento = null)
+
+        // 'elemento' es opcional (ej. "fuego") para que la debilidad elemental del enemigo aplique
+        // (ej. Esqueleto x1.5 contra fuego). Si no se pasa, no hay bonus.
+        // 'estadoExtra*' es opcional (ej. quemadura de Bola de Fuego): si el objetivo sobrevive al
+        // impacto, se tira su chance_pct acá adentro (mismo criterio que Enemigo.OnHitStatus), para
+        // que el RNG de combate quede centralizado en CombatSystem y no en la capa de UI.
+        public bool EjecutarMagia(Personaje lanzador, Enemigo objetivo, int danoMagico, int costoMp, string? elemento = null,
+            string? estadoExtra = null, int estadoChancePct = 0, int estadoDuracionTurnos = 0, int estadoDanoPorTurno = 0)
         {
             if (lanzador is Companero comp && comp.EsTetsu)
             {
@@ -55,8 +62,16 @@ namespace SoulAnchor.Managers
             lanzador.ConsumirMp(costoMp);
             objetivo.RecibirDano(danoMagico);
 
+            if (objetivo.EstaVivo() && estadoExtra != null && rng.Next(0, 100) < estadoChancePct)
+            {
+                objetivo.AplicarEstado(estadoExtra, estadoDuracionTurnos, estadoDanoPorTurno);
+            }
+
             return !objetivo.EstaVivo();
         }
+
+        // Turno del enemigo atacando a un aliado. Aplica el estado on-hit definido en su ficha JSON
+        // (ej. Araña Gigante -> Veneno 3 turnos) si acierta el chance_pct.
         public void EjecutarAtaqueEnemigo(Enemigo atacante, Personaje objetivo)
         {
             if (!atacante.EstaVivo() || !objetivo.EstaVivo()) return;
@@ -69,6 +84,9 @@ namespace SoulAnchor.Managers
                 objetivo.AplicarEstado(estado.Status, estado.DuracionTurnos, estado.DanoPorTurno);
             }
         }
+
+        // Se llama al cierre de cada ronda completa (todos actuaron) para tickear veneno/quemadura/
+        // sangrado sobre aliados y enemigos por igual. Ver Personaje.ProcesarEstados().
         public void ProcesarEstadosDeRonda()
         {
             foreach (var aliado in Aliados)
@@ -120,7 +138,10 @@ namespace SoulAnchor.Managers
             if (vivos.Count > 0)
             {
                 int xpPorCabeza = totalXp / vivos.Count;
-
+                foreach (var aliado in vivos)
+                {
+                    aliado.GanarXp(xpPorCabeza);
+                }
             }
 
             var jugador = Aliados.OfType<Jugador>().FirstOrDefault();

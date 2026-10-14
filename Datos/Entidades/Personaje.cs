@@ -17,9 +17,17 @@ namespace SoulAnchor.Datos.Entidades
 
         public int PuntosDisponibles { get; private set; }
 
+        // GDD 6.1: XP para siguiente nivel = 100 + (nivel*50) hasta lvl 50; luego 150 + (nivel*60).
+        public int XpActual { get; private set; }
+        public int XpParaSiguienteNivel { get; private set; }
+
         // Antes era List<string>. Ahora cada estado trackea su propia duración y daño por turno,
         // necesario para que veneno/quemadura/sangrado hagan algo de verdad (GDD sección 7).
         public List<EstadoAlterado> EstadosAlterados { get; private set; }
+
+        // GDD 4.1: "Los hechizos se aprenden mediante grimorios". Guarda ids de HechizoDatabase,
+        // no objetos completos, mismo criterio que Jugador.Mochila con los items.
+        public List<string> HechizosConocidos { get; private set; }
 
         public Personaje(string nombre, int nivel, int hpMax, int mpMax, int atk, int def)
         {
@@ -33,6 +41,45 @@ namespace SoulAnchor.Datos.Entidades
             Def = def;
             PuntosDisponibles = 0;
             EstadosAlterados = new List<EstadoAlterado>();
+            HechizosConocidos = new List<string>();
+
+            XpActual = 0;
+            XpParaSiguienteNivel = CalcularXpParaSiguienteNivel(Nivel);
+        }
+
+        public void AprenderHechizo(string idHechizo)
+        {
+            if (!HechizosConocidos.Contains(idHechizo))
+            {
+                HechizosConocidos.Add(idHechizo);
+            }
+        }
+
+        public bool ConoceHechizo(string idHechizo)
+        {
+            return HechizosConocidos.Contains(idHechizo);
+        }
+
+        private static int CalcularXpParaSiguienteNivel(int nivelActual)
+        {
+            return nivelActual <= 50 ? 100 + (nivelActual * 50) : 150 + (nivelActual * 60);
+        }
+
+        // Suma XP y sube de nivel automáticamente las veces que hagan falta (soporta que un solo
+        // combate alcance para varios niveles). Cada nivel sigue dando 5 puntos manuales (GDD 3.3/6.2);
+        // esto NO sube HP/MP/ATK/DEF solo, eso lo asigna el jugador.
+        public virtual void GanarXp(int cantidad)
+        {
+            if (cantidad <= 0) return;
+
+            XpActual += cantidad;
+
+            while (XpActual >= XpParaSiguienteNivel)
+            {
+                XpActual -= XpParaSiguienteNivel;
+                SubirNivel();
+                XpParaSiguienteNivel = CalcularXpParaSiguienteNivel(Nivel);
+            }
         }
 
         public virtual void RecibirDano(int ataqueEnemigo)
@@ -65,6 +112,17 @@ namespace SoulAnchor.Datos.Entidades
             if (MpActual > MpMaximo) MpActual = MpMaximo;
         }
 
+        // Paga un costo de HP fijo SIN mitigación de DEF (a diferencia de RecibirDano, que sí la
+        // aplica porque representa un golpe que el personaje intenta resistir). Pagar la propia
+        // vida por un hechizo no debería reducirse por la armadura. Usado por Magia de Sangre
+        // (GDD 2.4): si el costo supera el HP disponible, el hechizo se lanza igual y el personaje
+        // queda en 0 HP (fuera de combate) — el riesgo es justamente ese, por diseño.
+        public virtual void PagarCostoSangre(int cantidad)
+        {
+            HpActual -= cantidad;
+            if (HpActual < 0) HpActual = 0;
+        }
+
         public virtual void SubirNivel()
         {
             Nivel++;
@@ -76,7 +134,8 @@ namespace SoulAnchor.Datos.Entidades
             return HpActual > 0;
         }
 
-        //evita estados infinitos por spam del mismo ataque
+        // Aplica o refresca un estado alterado. Si ya está activo, toma la duración/daño mayor
+        // en vez de apilar turnos nuevos (evita estados "infinitos" por spam del mismo ataque).
         public void AplicarEstado(string tipo, int turnos, int danoPorTurno = 0)
         {
             var existente = EstadosAlterados.Find(e => e.Tipo == tipo);

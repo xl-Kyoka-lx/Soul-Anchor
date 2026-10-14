@@ -1,0 +1,15 @@
+{
+  "id": "bosque",
+  "encuentro_pct": 40,
+  "loot_pct": 10,
+  "bonus_nivel": 0,
+  "enemigos": [
+    { "id": "lobo",   "peso": 60 },
+    { "id": "goblin", "peso": 40 }
+  ],
+  "tamano_grupo": [
+    { "cantidad": 1, "peso": 30 },
+    { "cantidad": 2, "peso": 40 },
+    { "cantidad": 3, "peso": 30 }
+  ]
+}

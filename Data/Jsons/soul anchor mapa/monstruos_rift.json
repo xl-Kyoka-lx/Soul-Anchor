@@ -1,0 +1,17 @@
+{
+  "id": "rift",
+  "nota": "Provisional: usa enemigos comunes hasta que existan los enemigos unicos del Rift (Eco del Rift, Almas Vinculadas, Golem Reforzado, El Cobarde).",
+  "encuentro_pct": 60,
+  "loot_pct": 10,
+  "bonus_nivel": 3,
+  "enemigos": [
+    { "id": "esqueleto",     "peso": 40 },
+    { "id": "arana_gigante", "peso": 40 },
+    { "id": "ladron",        "peso": 20 }
+  ],
+  "tamano_grupo": [
+    { "cantidad": 1, "peso": 20 },
+    { "cantidad": 2, "peso": 40 },
+    { "cantidad": 3, "peso": 40 }
+  ]
+}

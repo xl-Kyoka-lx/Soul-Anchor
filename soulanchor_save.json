@@ -1,0 +1,12 @@
+{
+  "UbicacionX": 0,
+  "UbicacionY": 0,
+  "Oro": 0,
+  "Mochila": {},
+  "NivelJugador": 1,
+  "HpJugador": 100,
+  "MpJugador": 70,
+  "AtkJugador": 10,
+  "DefJugador": 8,
+  "PuntosDisponibles": 0
+}
